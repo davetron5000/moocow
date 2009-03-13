@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>: RTM::RTMBase [Ruby Client for Remember The Milk]</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>Class</span>
+          RTM::RTMBase
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a href="../../files/lib/rtm/base_rb.html">lib/rtm/base.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Parent:
+          <strong>Object</strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            <p>
+            Base for <a href="RTM.html">RTM</a> classes
+            </p>
+          </div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public class</h3>
+            <ol>
+              <li><a href="#M000015">new</a></li>
+            </ol>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000016">camelize</a></li>
+              <li><a href="#M000013">http</a></li>
+              <li><a href="#M000014">http=</a></li>
+            </ol>
+          </div>
+          <div id='section'>
+            <div id='constants-list'>
+              <h2>Constants</h2>
+              <div class='name-list'>
+                <table summary='Constants'>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>BASE_URL</td>
+                    <td>=</td>
+                    <td class='context-item-value'>'http://www.rememberthemilk.com/services/'</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div id='methods'>
+              <h2>Public class methods</h2>
+              <div class='public-class method' id='method-M000015'>
+                <a name='M000015'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>new</span>
+                  <span class='arguments'>(api_key,secret,http=nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Create
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000015-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000015-source'><span class="ruby-comment cmt"># File lib/rtm/base.rb, line 17</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">api_key</span>,<span class="ruby-identifier">secret</span>,<span class="ruby-identifier">http</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-ivar">@api_key</span> = <span class="ruby-identifier">api_key</span>&#x000A;      <span class="ruby-ivar">@secret</span> = <span class="ruby-identifier">secret</span>&#x000A;      <span class="ruby-ivar">@http</span>=<span class="ruby-identifier">http</span>&#x000A;      <span class="ruby-ivar">@http</span>=<span class="ruby-constant">HTTParty</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">http</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Cannot work with a secret key&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@secret</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Cannot work with a api_key key&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@api_key</span>.<span class="ruby-identifier">nil?</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <h2>Public instance methods</h2>
+              <div class='public-instance method' id='method-M000016'>
+                <a name='M000016'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>camelize</span>
+                  <span class='arguments'>(string,first_letter_in_uppercase = :lower)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Stolen from sequel
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000016-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000016-source'><span class="ruby-comment cmt"># File lib/rtm/base.rb, line 27</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">camelize</span>(<span class="ruby-identifier">string</span>,<span class="ruby-identifier">first_letter_in_uppercase</span> = <span class="ruby-identifier">:lower</span>)&#x000A;      <span class="ruby-identifier">s</span> = <span class="ruby-identifier">string</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\/(.?)/</span>){<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;::#{x[-1..-1].upcase unless x == '/'}&quot;</span>}.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/(^|_)(.)/</span>){<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>[<span class="ruby-value">-1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>].<span class="ruby-identifier">upcase</span>}&#x000A;      <span class="ruby-identifier">s</span>[<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-value">1</span>] = <span class="ruby-identifier">s</span>[<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-value">1</span>].<span class="ruby-identifier">downcase</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">first_letter_in_uppercase</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:upper</span>&#x000A;      <span class="ruby-identifier">s</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000013'>
+                <a name='M000013'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>http</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000013-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000013-source'><span class="ruby-comment cmt"># File lib/rtm/base.rb, line 8</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">http</span>&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@http</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000014'>
+                <a name='M000014'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>http=</span>
+                  <span class='arguments'>(new_http)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000014-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000014-source'><span class="ruby-comment cmt"># File lib/rtm/base.rb, line 12</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">http=</span>(<span class="ruby-identifier">new_http</span>)&#x000A;      <span class="ruby-ivar">@http</span> = <span class="ruby-identifier">new_http</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

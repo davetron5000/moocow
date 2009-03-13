@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>: RTM::RTM [Ruby Client for Remember The Milk]</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>Class</span>
+          RTM::RTM
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a href="../../files/lib/rtm/rtm_rb.html">lib/rtm/rtm.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Parent:
+          <strong><a href="RTMBase.html">RTM::RTMBase</a></strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            <p>
+            Root access to <a href="RTM.html">RTM</a> api. Most methods work just like
+            the api demonstrates, however auth is a bit different:
+            </p>
+            <pre>rtm = RTM.new(api_key,secret)&#x000A;auth_url = rtm.auth.url&#x000A;# Send user to url&#x000A;# When they click authorize and return to your app do:&#x000A;rtm.token=rtm.auth.get_token</pre>
+            <p>
+            This is a one time thing, so cache the token somewhere and you are good to
+            go:
+            </p>
+            <pre>response = rtm.tasks.getList(:filter =&gt; 'location:Work and status:completed')&#x000A;response = rtm.groups.add(:group =&gt; 'My New Group')</pre>
+            <p>
+            If you don&#8217;t supply timelines, they will be created for you each time
+            as needed. Also note that you can use Ruby-style method calls instead of
+            filthy camel-case, e.g.
+            </p>
+            <pre>response = rtm.tasks.get_list(:filter =&gt; 'location:Work and status:completed')&#x000A;# Same as&#x000A;response = rtm.tasks.getList(:filter =&gt; 'location:Work and status:completed')</pre>
+          </div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public class</h3>
+            <ol>
+              <li><a href="#M000004">new</a></li>
+            </ol>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000006">auth</a></li>
+              <li><a href="#M000008">checkToken</a></li>
+              <li><a href="#M000007">check_token</a></li>
+              <li><a href="#M000010">method_missing</a></li>
+              <li><a href="#M000009">test</a></li>
+              <li><a href="#M000005">token=</a></li>
+            </ol>
+          </div>
+          <div id='section'>
+            <div id='methods'>
+              <h2>Public class methods</h2>
+              <div class='public-class method' id='method-M000004'>
+                <a name='M000004'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>new</span>
+                  <span class='arguments'>(api_key,secret,token=nil,http=nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Create access to <a href="RTM.html">RTM</a>
+                  </p>
+                  <dl>
+                  <dt>api_key</dt><dd>your api key
+                  
+                  </dd>
+                  <dt>secret</dt><dd>your shared secret
+                  
+                  </dd>
+                  <dt>token</dt><dd>the token your user has acquired after authorizing (via <a
+                  href="RTMAuth.html">RTMAuth</a>)
+                  
+                  </dd>
+                  <dt>http</dt><dd>HTTP implementation; mostly useful for testing
+                  
+                  </dd>
+                  </dl>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000004-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000004-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 36</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">api_key</span>,<span class="ruby-identifier">secret</span>,<span class="ruby-identifier">token</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">http</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">api_key</span>,<span class="ruby-identifier">secret</span>,<span class="ruby-identifier">http</span>)&#x000A;      <span class="ruby-ivar">@token</span> = <span class="ruby-identifier">token</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <h2>Public instance methods</h2>
+              <div class='public-instance method' id='method-M000006'>
+                <a name='M000006'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>auth</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Get the auth method-space
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000006-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 47</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">auth</span>&#x000A;      <span class="ruby-constant">RTMAuth</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@api_key</span>,<span class="ruby-ivar">@secret</span>,<span class="ruby-identifier">http</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000008'>
+                <a name='M000008'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>checkToken</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="RTM.html#M000007">check_token</a>
+                  </p>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000007'>
+                <a name='M000007'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>check_token</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Raises an <a href="InvalidTokenException.html">InvalidTokenException</a> if
+                  the token is not valid
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000007-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000007-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 52</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_token</span>&#x000A;      <span class="ruby-identifier">response</span> = <span class="ruby-identifier">http</span>.<span class="ruby-identifier">get</span>(<span class="ruby-identifier">url_for</span>(<span class="ruby-value str">'rtm.auth.checkToken'</span>,{<span class="ruby-value str">'auth_token'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@token</span>}))&#x000A;      <span class="ruby-keyword kw">begin</span>&#x000A;        <span class="ruby-identifier">verify</span> <span class="ruby-identifier">response</span>&#x000A;      <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">VerificationException</span>&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidTokenException</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000010'>
+                <a name='M000010'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>method_missing</span>
+                  <span class='arguments'>(symbol,*args)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Gateway to all other method-spaces. Assumes you are making a valid call on
+                  <a href="RTM.html">RTM</a>. Essentially, <b>any</b> method will give you an
+                  <a href="RTMMethod.html">RTMMethod</a> object keyed to the method name,
+                  e.g. rtm.foobar will assume that <a href="RTM.html">RTM</a> has a
+                  &#8220;foobar&#8221; methodspace. method names are converted to camelcase.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000010-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000010-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 73</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>&#x000A;        <span class="ruby-identifier">rtm_object</span> = <span class="ruby-identifier">camelize</span>(<span class="ruby-identifier">symbol</span>.<span class="ruby-identifier">to_s</span>)&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethod</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rtm_object</span>,<span class="ruby-ivar">@api_key</span>,<span class="ruby-ivar">@secret</span>,<span class="ruby-ivar">@token</span>,<span class="ruby-identifier">http</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000009'>
+                <a name='M000009'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>test</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Get the test method-space (Kernel defines a test method, making <a
+                  href="RTM.html#M000010">method_missing</a> problematic)
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000009-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000009-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 65</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test</span>&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethod</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'test'</span>,<span class="ruby-ivar">@api_key</span>,<span class="ruby-ivar">@secret</span>,<span class="ruby-ivar">@token</span>,<span class="ruby-identifier">http</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000005'>
+                <a name='M000005'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>token=</span>
+                  <span class='arguments'>(token)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Set the token
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000005-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000005-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 42</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">token=</span>(<span class="ruby-identifier">token</span>)&#x000A;      <span class="ruby-ivar">@token</span> = <span class="ruby-identifier">token</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>
