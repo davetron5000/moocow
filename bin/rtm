@@ -1,0 +1,93 @@
+#!/usr/bin/ruby
+$: << File.expand_path(File.dirname(__FILE__) + '/../lib')
+require 'rubygems'
+require 'gli'
+require 'httparty'
+require 'rtm/rtm'
+require 'ext/hash_array'
+
+include GLI
+
+desc 'executes any RTM method'
+arg_name 'the rtm method, minus the "rtm.", e.g. "test.echo"'
+command :any do |c|
+  c.action do |global_options,options,args|
+    parts = args[0].split(/\./)
+    obj = $rtm.send(parts.shift.to_s)
+    response = obj
+    parts.each do |p|
+      response = response.send(p.to_sym)
+    end
+    puts response.inspect
+  end
+end
+
+desc 'Lists incomplete tasks'
+arg_name 'name of the list'
+command :ls do |c|
+  c.action do |global_options,options,args|
+    params = { :filter => 'status:incomplete' }
+    params[:filter] += " AND list:#{args[0]}" if args.length > 0
+    response = $rtm.tasks.get_list(params)
+    tasks = Array.new
+    response.tasks.list.as_array.each do |l|
+      l.taskseries.as_array.each do |task|
+        tasks << task
+      end
+    end
+    tasks.sort {|a,b| a.name.upcase <=> b.name.upcase }.each do |task|
+      printf "%10d - %s\n",task['id'],task.name
+    end
+  end
+end
+
+desc 'Prints out the auth URL to authorize your api key/ruby client.  Do not do this after getting a token'
+command :auth do |c|
+  c.action do |global_options,options,args|
+    puts $rtm.get_auth_url
+  end
+end
+
+desc 'Gets your token; do this only once and put it in your api.yaml file'
+command :token do |c|
+  c.action do |global_options,options,args|
+    puts $rtm.get_token
+  end
+end
+
+desc 'Checks that your token is valid'
+command :chktoken do |c|
+  c.action do |global_options,options,args|
+    begin
+      $rtm.check_token
+      puts "Token good"
+    rescue RTM::InvalidTokenException
+      puts "Token bad"
+    end
+  end
+end
+
+pre do |global_options,command,options,args|
+  if command.name != :help
+    return_val = true
+    if File.exists? 'api.yaml'
+    api_info = File.open('api.yaml') { |file| YAML::load(file) }
+    if !(api_info[:api_key] && api_info[:secret])
+      puts "api.yaml isn't complete"
+      return_val = false;
+    else
+      $rtm = RTM::RTM.new(api_info[:api_key],api_info[:secret],api_info[:token])
+    end
+    else
+      puts "api.yaml not found; this is a YAML hash of your API key, secret key, and token"
+      File.open('api.yaml','w') { |file| YAML::dump({'api_key' => 'your api key', 'secret' => 'your secret'},file); }
+      puts "it has been created for you with dummy values"
+      return_val = false
+    end
+    return_val
+  else
+    true
+  end
+end
+
+GLI.run(ARGV)
