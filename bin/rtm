@@ -8,8 +8,8 @@ require 'ext/hash_array'
 
 include GLI
 
-desc 'executes any RTM method'
-arg_name 'the rtm method, minus the "rtm.", e.g. "test.echo"'
+arg_name 'method.call'
+desc 'executes any RTM method.  Do not include the "rtm." in the method name'
 command :any do |c|
   c.action do |global_options,options,args|
     parts = args[0].split(/\./)
@@ -23,7 +23,7 @@ command :any do |c|
 end
 
 desc 'Lists incomplete tasks'
-arg_name 'name of the list'
+arg_name 'list_name'
 command :ls do |c|
   c.action do |global_options,options,args|
     params = { :filter => 'status:incomplete' }
@@ -41,17 +41,25 @@ command :ls do |c|
   end
 end
 
-desc 'Prints out the auth URL to authorize your api key/ruby client.  Do not do this after getting a token'
+desc 'Prints out the auth URL to authorize your api key/ruby client and the frob that was used.  Do not do this after getting a token'
 command :auth do |c|
   c.action do |global_options,options,args|
     puts $rtm.get_auth_url
+    puts $rtm.frob
   end
 end
 
 desc 'Gets your token; do this only once and put it in your api.yaml file'
+arg_name "frob"
 command :token do |c|
   c.action do |global_options,options,args|
-    puts $rtm.get_token
+    if args.length == 1
+    auth = $rtm.auth
+    auth.frob = args[0]
+    puts $rtm.auth.get_token
+    else
+      puts "You must provide your frob as the argument"
+    end
   end
 end
 

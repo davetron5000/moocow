@@ -1,1 +1,83 @@
-Ruby Client for Remember The Milk
+== Ruby Client for Remember The Milk
+
+This is a very lightweight and easy-to-use client for <a href="http://www.rememberthemilk.com">Remember The Milk</a>.
+
+    rtm = RTM.new(your_api_key,your_secret)
+    auth = rtm.auth
+    url = auth.url
+    frob = auth.frob
+    # Send user to this URL
+    # They will authorize your app's api_key via the RTM website.  
+    # store the frob somewhere, you will need it
+    #
+    # When they return...
+    auth.frob=frob
+    rtm.token=auth.get_token
+    # store the token for all time
+    
+    rtm.tasks.getList
+    rtm.groups.delete
+    rtm.tasks.notes.add
+
+And so forth.  Basically, you can call the RTM methods as if they were real methods.
+
+To examine the output, you have two choices:
+
+    response = rtm.tasks.getList
+    response.tasks.list.as_array.each do |list|
+      # this is an RTM list of taskseries
+    end
+
+OR
+
+    response = rtm.tasks.getList
+    response['tasks']['list'].as_array.each do |list|
+      # this is an RTM list of taskseries
+    end
+
+The second form is safer, as you avoid possible clashes on existing method names.  Note that for any element that you want to treat as a list, you must call as_array on it, to ensure that it gets turned into a list.  The underlying HTTParty code doesn't know if an XML element is supposed to be a list or just a singular.
+
+<i>Note that you can use Ruby-style conventions instead of camel-case, e.g. <tt>rtm.tasks.get_list</tt></i>
+
+== Basic Command Line
+
+To verify and play with the RTM API, there is a command-line tool called <tt>rtm</tt>.  It takes the following commands:
+
+[any] executes any RTM method
+[auth] Prints out the auth URL to authorize your api key/ruby client. Do not do this after getting a token
+[chktoken] Checks that your token is valid
+[help] Shows list of commands or help for one command
+[ls] Lists incomplete tasks
+[token] Gets your token; do this only once and put it in your api.yaml file
+
+The easiest way to get started is to get your API Key and Secret from RTM and then:
+
+   rtm ls
+
+This will init your api.yaml file
+
+   rtm auth
+
+Go to this URL and authorize your API Key.  Save the frob that is printed out
+
+    rtm token <<frob>>
+
+This will authorize your app and print out your token.  Edit <tt>api.yaml</tt> and add your token.
+
+    rtm ls
+
+Will list your incomplete tasks if all is well.
+
+    rtm any contacts.getList
+
+Will print out a hashdump of what RTM returns for this method.
+   
+== TODO
+
+* The auth scheme kinda sucks; only works for command line and not very helpful
+* Would be nice to have methods that require timelines actually get them if you don't specify one
+
+== Links
+
+* http://github.com/davetron5000/rtm - Source code
+* http://www.rememberthemilk.com/services/api/methods/ - RTM API documentation

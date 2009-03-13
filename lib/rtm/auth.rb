@@ -38,8 +38,18 @@ module RTM
     def get_frob
       response = http.get(url_for('rtm.auth.getFrob'))
       verify(response)
-      response['rsp']['frob']
+      @frob = response['rsp']['frob']
+      @frob
     end
     alias :getFrob :get_frob
+
+    # After a call to get_frob, this returns the frob that was gotten.
+    def frob
+      @frob
+    end
+
+    def frob=(frob)
+      @frob=frob
+    end
   end
 end
