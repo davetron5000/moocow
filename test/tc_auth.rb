@@ -5,6 +5,16 @@ require 'testbase'
 include RTM
 
 class TC_testAuth < TestBase
+  
+  def test_get_set_frob
+    rtm = RTM::RTM.new('a','b','good token')
+    rtm.http = MockHttp.new
+    auth = rtm.auth
+
+    frob = 'this is a frob'
+    auth.frob = frob
+    assert_equal frob,auth.frob
+  end
 
   def test_bad_check_token_call
     rtm = RTM::RTM.new('a','b','good token')
