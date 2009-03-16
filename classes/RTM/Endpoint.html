@@ -56,9 +56,10 @@
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000014">call_method</a></li>
-              <li><a href="#M000013">token=</a></li>
-              <li><a href="#M000015">url_for</a></li>
+              <li><a href="#M000013">auto_timeline=</a></li>
+              <li><a href="#M000015">call_method</a></li>
+              <li><a href="#M000014">token=</a></li>
+              <li><a href="#M000016">url_for</a></li>
             </ol>
           </div>
           <div id='section'>
@@ -112,8 +113,21 @@
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000014'>
-                <a name='M000014'>      </a>
+              <div class='public-instance method' id='method-M000013'>
+                <a name='M000013'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>auto_timeline=</span>
+                  <span class='arguments'>(auto)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000013-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000013-source'><span class="ruby-comment cmt"># File lib/rtm/endpoint.rb, line 37</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">auto_timeline=</span>(<span class="ruby-identifier">auto</span>)&#x000A;      <span class="ruby-ivar">@auto_timeline</span> = <span class="ruby-identifier">auto</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000015'>
+                <a name='M000015'>      </a>
                 <div class='synopsis'>
                   <span class='name'>call_method</span>
                   <span class='arguments'>(method,params={},token_required=true)</span>
@@ -136,14 +150,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000014-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000015-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000014-source'><span class="ruby-comment cmt"># File lib/rtm/endpoint.rb, line 46</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call_method</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">params</span>={},<span class="ruby-identifier">token_required</span>=<span class="ruby-keyword kw">true</span>)&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">NoTokenException</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">token_required</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-operator">!</span><span class="ruby-ivar">@token</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@token</span>.<span class="ruby-identifier">nil?</span>)&#x000A;      <span class="ruby-identifier">params</span> = {} <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:auth_token</span>] = <span class="ruby-ivar">@token</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@token</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-identifier">params_no_symbols</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>&#x000A;      <span class="ruby-identifier">params</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">params_no_symbols</span>[<span class="ruby-identifier">k</span>.<span class="ruby-identifier">to_s</span>] = <span class="ruby-identifier">v</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;&#x000A;      <span class="ruby-identifier">response</span> = <span class="ruby-ivar">@http</span>.<span class="ruby-identifier">get</span>(<span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">params_no_symbols</span>))&#x000A;      <span class="ruby-identifier">verify</span>(<span class="ruby-identifier">response</span>)&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">response</span>[<span class="ruby-value str">'rsp'</span>]&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000015-source'><span class="ruby-comment cmt"># File lib/rtm/endpoint.rb, line 50</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call_method</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">params</span>={},<span class="ruby-identifier">token_required</span>=<span class="ruby-keyword kw">true</span>)&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">NoTokenException</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">token_required</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-operator">!</span><span class="ruby-ivar">@token</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@token</span>.<span class="ruby-identifier">nil?</span>)&#x000A;      <span class="ruby-identifier">params</span> = {} <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:auth_token</span>] = <span class="ruby-ivar">@token</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@token</span>.<span class="ruby-identifier">nil?</span>&#x000A;&#x000A;      <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@auto_timeline</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-constant">NO_TIMELINE</span>[<span class="ruby-identifier">method</span>])&#x000A;        <span class="ruby-identifier">response</span> = <span class="ruby-ivar">@http</span>.<span class="ruby-identifier">get</span>(<span class="ruby-identifier">url_for</span>(<span class="ruby-value str">'rtm.timelines.create'</span>,{<span class="ruby-value str">'auth_token'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@token</span>}));&#x000A;        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">response</span>[<span class="ruby-value str">'timeline'</span>]&#x000A;          <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:timeline</span>] = <span class="ruby-identifier">response</span>[<span class="ruby-value str">'timeline'</span>]&#x000A;        <span class="ruby-keyword kw">else</span>&#x000A;          <span class="ruby-identifier">raise</span> <span class="ruby-constant">BadResponseException</span>, <span class="ruby-node">&quot;Expected a &lt;timeline&gt;&lt;/timeline&gt; type response, but got: #{response.body}&quot;</span>&#x000A;        <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;&#x000A;      <span class="ruby-identifier">params_no_symbols</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>&#x000A;      <span class="ruby-identifier">params</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">params_no_symbols</span>[<span class="ruby-identifier">k</span>.<span class="ruby-identifier">to_s</span>] = <span class="ruby-identifier">v</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;&#x000A;      <span class="ruby-identifier">response</span> = <span class="ruby-ivar">@http</span>.<span class="ruby-identifier">get</span>(<span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">params_no_symbols</span>))&#x000A;      <span class="ruby-identifier">verify</span>(<span class="ruby-identifier">response</span>)&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">response</span>[<span class="ruby-value str">'rsp'</span>]&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000013'>
-                <a name='M000013'>      </a>
+              <div class='public-instance method' id='method-M000014'>
+                <a name='M000014'>      </a>
                 <div class='synopsis'>
                   <span class='name'>token=</span>
                   <span class='arguments'>(token)</span>
@@ -154,14 +168,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000013-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000014-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000013-source'><span class="ruby-comment cmt"># File lib/rtm/endpoint.rb, line 38</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">token=</span>(<span class="ruby-identifier">token</span>)&#x000A;      <span class="ruby-ivar">@token</span> = <span class="ruby-identifier">token</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000014-source'><span class="ruby-comment cmt"># File lib/rtm/endpoint.rb, line 42</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">token=</span>(<span class="ruby-identifier">token</span>)&#x000A;      <span class="ruby-ivar">@token</span> = <span class="ruby-identifier">token</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000015'>
-                <a name='M000015'>      </a>
+              <div class='public-instance method' id='method-M000016'>
+                <a name='M000016'>      </a>
                 <div class='synopsis'>
                   <span class='name'>url_for</span>
                   <span class='arguments'>(method,params={},endpoint='rest')</span>
@@ -185,10 +199,10 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000015-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000016-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000015-source'><span class="ruby-comment cmt"># File lib/rtm/endpoint.rb, line 65</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">params</span>={},<span class="ruby-identifier">endpoint</span>=<span class="ruby-value str">'rest'</span>)&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-value str">'api_key'</span>] = <span class="ruby-ivar">@api_key</span>&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-value str">'method'</span>] = <span class="ruby-identifier">method</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">method</span>&#x000A;      <span class="ruby-identifier">signature</span> = <span class="ruby-identifier">sign</span>(<span class="ruby-identifier">params</span>)&#x000A;      <span class="ruby-identifier">url</span> = <span class="ruby-constant">BASE_URL</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">endpoint</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'/'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">params_to_url</span>(<span class="ruby-identifier">params</span>.<span class="ruby-identifier">merge</span>({<span class="ruby-value str">'api_sig'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">signature</span>}))&#x000A;      <span class="ruby-identifier">url</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000016-source'><span class="ruby-comment cmt"># File lib/rtm/endpoint.rb, line 79</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">params</span>={},<span class="ruby-identifier">endpoint</span>=<span class="ruby-value str">'rest'</span>)&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-value str">'api_key'</span>] = <span class="ruby-ivar">@api_key</span>&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-value str">'method'</span>] = <span class="ruby-identifier">method</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">method</span>&#x000A;      <span class="ruby-identifier">signature</span> = <span class="ruby-identifier">sign</span>(<span class="ruby-identifier">params</span>)&#x000A;      <span class="ruby-identifier">url</span> = <span class="ruby-constant">BASE_URL</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">endpoint</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'/'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">params_to_url</span>(<span class="ruby-identifier">params</span>.<span class="ruby-identifier">merge</span>({<span class="ruby-value str">'api_sig'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">signature</span>}))&#x000A;      <span class="ruby-identifier">url</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>
