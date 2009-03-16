@@ -27,6 +27,7 @@ end
 
 Rake::TestTask.new do |t|
   t.libs << "test"
+  t.libs << 'ext'
   t.test_files = FileList['test/tc_*.rb']
 end
 
@@ -37,6 +38,7 @@ end
 
 Rcov::RcovTask.new do |t|
   t.libs << 'test'
+  t.libs << 'ext'
   t.test_files = FileList['test/tc_*.rb']
 end
 

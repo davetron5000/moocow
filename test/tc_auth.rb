@@ -2,13 +2,13 @@ require 'rtm'
 require 'test/unit'
 require 'test/unit/ui/console/testrunner'
 require 'testbase'
+require 'string_camelize'
 include RTM
 
 class TC_testAuth < TestBase
   
   def test_get_set_frob
-    rtm = RTM::RTM.new('a','b','good token')
-    rtm.http = MockHttp.new
+    rtm = get_rtm
     auth = rtm.auth
 
     frob = 'this is a frob'
@@ -17,27 +17,23 @@ class TC_testAuth < TestBase
   end
 
   def test_bad_check_token_call
-    rtm = RTM::RTM.new('a','b','good token')
-    rtm.http = MockHttp.new
+    rtm = get_rtm
     assert_raises RuntimeError do
       rtm.auth.check_token
     end
   end
 
   def test_check_token_good
-    rtm = RTM::RTM.new('a','b','good token')
-    rtm.http = MockHttp.new
+    rtm = get_rtm
     rtm.check_token
   end
 
   def test_check_token_bad
-    rtm = RTM::RTM.new('a','b','good token')
-    rtm.http = MockHttp.new( {'rsp' => 
-                              { 'stat' => 'fail', 'err' => 
-                                { 'code' => '98', 'msg' => 'Invalid auth token' }
-                              }
-    }
-);
+    rtm = get_rtm(true,{'rsp' => 
+                  { 'stat' => 'fail', 'err' => 
+                    { 'code' => '98', 'msg' => 'Invalid auth token' }
+                  }
+    });
     assert_raises InvalidTokenException do
       rtm.check_token
     end
@@ -45,16 +41,7 @@ class TC_testAuth < TestBase
 
   def test_update_token
     http = MockHttp.new
-    rtm = RTM::RTM.new('a','b')
-    rtm.http = http
-    assert_raises NoTokenException do
-      rtm.tasks.getList
-    end
-
-    # Now, we simulate getting the token
-    auth = rtm.auth
-    auth.http = MockHttp.new
-    class << auth.http
+    class << http
       def get(url)
         response = Hash.new
         response['rsp'] = Hash.new
@@ -81,6 +68,14 @@ class TC_testAuth < TestBase
         end
       end
     end
+    endpoint = Endpoint.new('a','b',http)
+    rtm = RTM::RTM.new(endpoint)
+    assert_raises NoTokenException do
+      rtm.tasks.getList
+    end
+
+    # Now, we simulate getting the token
+    auth = rtm.auth
     url = auth.url
     # user would get sent to this url and click OK, validating the frob
     token = auth.get_token

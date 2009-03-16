@@ -2,7 +2,7 @@
 
 This is a very lightweight and easy-to-use client for <a href="http://www.rememberthemilk.com">Remember The Milk</a>.
 
-    rtm = RTM.new(your_api_key,your_secret)
+    rtm = RTM.new(Endpoint.new(your_api_key,your_secret))
     auth = rtm.auth
     url = auth.url
     frob = auth.frob

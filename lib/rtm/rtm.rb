@@ -1,13 +1,16 @@
 require 'rubygems'
+require 'string_camelize'
 require 'digest/md5'
 require 'cgi'
-require 'rtm/base'
+require 'rtm/auth'
+require 'rtm/endpoint'
 
 module RTM
+
   # Root access to RTM api.
   # Most methods work just like the api demonstrates, however auth is a bit different:
   #
-  #     rtm = RTM.new(api_key,secret)
+  #     rtm = RTM.new(Endpoint.new(api_key,secret))
   #     auth_url = rtm.auth.url
   #     # Send user to url
   #     # When they click authorize and return to your app do:
@@ -25,55 +28,48 @@ module RTM
   #     # Same as 
   #     response = rtm.tasks.getList(:filter => 'location:Work and status:completed')
   #
-  class RTM < RTMBase
+  class RTM
 
     # Create access to RTM
     # 
-    # [api_key] your api key
-    # [secret]  your shared secret
-    # [token] the token your user has acquired after authorizing (via RTMAuth)
-    # [http] HTTP implementation; mostly useful for testing
-    def initialize(api_key,secret,token=nil,http=nil)
-      super(api_key,secret,http)
-      @token = token
+    # [endpoint] an Endpoint to RTM
+    def initialize(endpoint)
+      @endpoint = endpoint
     end
 
     # Set the token
     def token=(token)
-      @token = token
+      @endpoint.token=token
     end
 
     # Get the auth method-space
     def auth
-      RTMAuth.new(@api_key,@secret,http)
+      RTMAuth.new(@endpoint)
     end
 
     # Raises an InvalidTokenException if the token is not valid
     def check_token
-      response = http.get(url_for('rtm.auth.checkToken',{'auth_token' => @token}))
       begin
-        verify response
+        response = @endpoint.call_method('rtm.auth.checkToken')
       rescue VerificationException
         raise InvalidTokenException
       end
     end
     alias :checkToken :check_token
 
-
-
     # Get the test method-space (Kernel defines a test method, making method_missing problematic)
     def test
-      return RTMMethod.new('test',@api_key,@secret,@token,http)
+      return RTMMethodSpace.new('test',@endpoint)
     end
 
     # Gateway to all other method-spaces.  Assumes you are making a valid call
-    # on RTM.  Essentially, *any* method will give you an RTMMethod object keyed to the
+    # on RTM.  Essentially, *any* method will give you an RTMMethodSpace object keyed to the
     # method name, e.g. rtm.foobar will assume that RTM has a "foobar" methodspace.
     # method names are converted to camelcase.
     def method_missing(symbol,*args)
       if !args || args.empty?
-        rtm_object = camelize(symbol.to_s)
-        return RTMMethod.new(rtm_object,@api_key,@secret,@token,http)
+        rtm_object = symbol.to_s.camelize
+        return RTMMethodSpace.new(rtm_object,@endpoint)
       else
         return super(symbol,*args)
       end
@@ -83,16 +79,20 @@ module RTM
 
   # Generic means of calling an RTM method.  This is returned by RTM.method_missing and, in most cases, is
   # the end point that calls an RTM method.  
-  class RTMMethod < RTMBase
-    # Creates an RTMMethod for the given name, api_key, secret, and token
-    def initialize(name,api_key,secret,token,http=nil)
-      super(api_key,secret,http)
-      @token = token
+  class RTMMethodSpace
+
+    # Create an RTMMethodSpace
+    #
+    # [name] the name of this method space, e.g. 'tasks'
+    # [endpoint] an endpoing to RTM
+    def initialize(name,endpoint)
       @name = name
+      @endpoint = endpoint
+      raise "No endpoint" if @endpoint.nil?
     end
 
-    # Calls the method on RTM in most cases.  The only exception is if this RTMMethod is 'tasks' and you
-    # call the 'notes' method on it: a new RTMMethod is returned for the 'rtm.tasks.notes' method-space.
+    # Calls the method on RTM in most cases.  The only exception is if this RTMMethodSpace is 'tasks' and you
+    # call the 'notes' method on it: a new RTMMethodSpace is returned for the 'rtm.tasks.notes' method-space.
     #
     # This returns a response object as from HTTParty, dereferenced into <rsp>.  So, for example, if you called
     # the 'tasks.getList' method, you would get a hash that could be accessed via response['tasks'].
@@ -114,22 +114,23 @@ module RTM
     # if you got a non-OK response.
     def method_missing(symbol,*args)
       if (@name == 'tasks' && symbol.to_s == 'notes')
-        return RTMMethod.new("tasks.notes",@api_key,@secret,@token,@http)
+        return RTMMethodSpace.new("tasks.notes",@endpoint)
       else
-        rtm_method = "rtm.#{@name}.#{camelize(symbol.to_s)}"
-        url = nil
-        raise NoTokenException if !@token || @token.nil?
-        params = { :auth_token => @token }
-        params = params.merge(args[0]) if !args.empty?
-        params_no_symbols = Hash.new
-        params.each do |k,v|
-          params_no_symbols[k.to_s] = v
-        end
-        
-        response = http.get(url_for(rtm_method,params_no_symbols))
-        verify(response)
-        return response['rsp']
+        rtm_method = "rtm.#{@name}.#{symbol.to_s.camelize}"
+        @endpoint.call_method(rtm_method,*args)
       end
     end
+  end
+
+  class VerificationException < Exception
+  end
+
+  class BadResponseException < Exception
+  end
+
+  class InvalidTokenException < Exception
+  end
+
+  class NoTokenException < Exception
   end
 end

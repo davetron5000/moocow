@@ -1,9 +1,10 @@
 #!/usr/bin/ruby
 $: << File.expand_path(File.dirname(__FILE__) + '/../lib')
+$: << File.expand_path(File.dirname(__FILE__) + '/../ext')
 require 'rubygems'
 require 'gli'
 require 'httparty'
-require 'rtm/rtm'
+require 'rtm'
 require 'ext/hash_array'
 
 include GLI
@@ -30,10 +31,12 @@ command :ls do |c|
     params[:filter] += " AND list:#{args[0]}" if args.length > 0
     response = $rtm.tasks.get_list(params)
     tasks = Array.new
+    if response.tasks
     response.tasks.list.as_array.each do |l|
       l.taskseries.as_array.each do |task|
         tasks << task
       end
+    end
     end
     tasks.sort {|a,b| a.name.upcase <=> b.name.upcase }.each do |task|
       printf "%10d - %s\n",task['id'],task.name
@@ -84,7 +87,9 @@ pre do |global_options,command,options,args|
       puts "api.yaml isn't complete"
       return_val = false;
     else
-      $rtm = RTM::RTM.new(api_info[:api_key],api_info[:secret],api_info[:token])
+      ep = RTM::Endpoint.new(api_info[:api_key],api_info[:secret])
+      ep.token=api_info[:token]
+      $rtm = RTM::RTM.new(ep)
     end
     else
       puts "api.yaml not found; this is a YAML hash of your API key, secret key, and token"

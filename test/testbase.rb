@@ -1,9 +1,12 @@
 require 'rexml/formatters/pretty'
+require 'string_camelize'
 class MockHttp
   def initialize(response=nil)
     @response = response
-    class << @response
-      def body; self.inspect; end
+    if !@response.nil?
+      class << @response
+        def body; self.inspect; end
+      end
     end
   end
   def get(url)
@@ -34,5 +37,15 @@ end
 
 class TestBase < Test::Unit::TestCase
   def test_true
+  end
+
+  def endpoint(response=nil)
+    Endpoint.new('a','b',MockHttp.new(response))
+  end
+
+  def get_rtm(use_token=true,response=nil)
+    rtm = RTM::RTM.new(endpoint(response))
+    rtm.token = 'fake_token' if use_token
+    rtm
   end
 end

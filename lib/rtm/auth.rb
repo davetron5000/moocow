@@ -1,5 +1,4 @@
-require 'rtm/base'
-
+require 'string_camelize'
 module RTM
 
   # Implements authorization related tasks.  These are to be used one-time only
@@ -11,22 +10,21 @@ module RTM
   #     # When they have done so
   #     token = auth.get_token
   #     # object auth no longer needed; use token with RTM
-  class RTMAuth < RTMBase
-    def initialize(api_key,secret,http=nil)
-      super(api_key,secret,http)
+  class RTMAuth
+    def initialize(endpoint)
+      @endpoint = endpoint
     end
 
     # Get the URL to allow the user to authorize the application
     def url
       @frob = get_frob
-      url_for(nil,{'frob' => @frob, 'perms' => 'delete'},'auth')
+      @endpoint.url_for(nil,{'frob' => @frob, 'perms' => 'delete'},'auth')
     end
 
     # After the user has authorized, gets the token
     def get_token
-      response = http.get(url_for('rtm.auth.getToken', { 'frob' => @frob }))
-      verify(response)
-      response['rsp']['auth']['token']
+      response = @endpoint.call_method('rtm.auth.getToken', { 'frob' => @frob }, false)
+      response['auth']['token']
     end
     alias :getToken :get_token
 
@@ -36,9 +34,8 @@ module RTM
     alias :checkToken :check_token
 
     def get_frob
-      response = http.get(url_for('rtm.auth.getFrob'))
-      verify(response)
-      @frob = response['rsp']['frob']
+      response = @endpoint.call_method('rtm.auth.getFrob',nil,false)
+      @frob = response['frob']
       @frob
     end
     alias :getFrob :get_frob
