@@ -1,6 +1,23 @@
 require 'httparty'
 
 module RTM
+
+  NO_TIMELINE = {
+    "rtm.contacts.getList" => true,
+    "rtm.groups.getList" => true,
+    "rtm.lists.getList" => true,
+    "rtm.reflection.getMethodInfo" => true,
+    "rtm.reflection.getMethods" => true,
+    "rtm.settings.getList" => true,
+    "rtm.tasks.getList" => true,
+    "rtm.test.echo" => true,
+    "rtm.test.login" => true,
+    "rtm.time.convert" => true,
+    "rtm.time.parse" => true,
+    "rtm.timelines.create" => true,
+    "rtm.timezones.getList" => true,
+    "rtm.transactions.undo" => true,
+  }
   # Base for RTM classes
   class RTMBase
     BASE_URL = 'http://www.rememberthemilk.com/services/'
