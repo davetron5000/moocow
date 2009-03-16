@@ -47,8 +47,9 @@ end
 desc 'Prints out the auth URL to authorize your api key/ruby client and the frob that was used.  Do not do this after getting a token'
 command :auth do |c|
   c.action do |global_options,options,args|
-    puts $rtm.get_auth_url
-    puts $rtm.frob
+    auth = $rtm.auth
+    puts auth.url
+    puts auth.frob
   end
 end
 
@@ -57,11 +58,17 @@ arg_name "frob"
 command :token do |c|
   c.action do |global_options,options,args|
     if args.length == 1
-    auth = $rtm.auth
-    auth.frob = args[0]
-    puts $rtm.auth.get_token
+      auth = $rtm.auth
+      auth.frob = args[0]
+      puts "Use frob '#{args[0]}'?"
+      a = $stdin.gets.chomp
+      if a == 'yes'
+        puts auth.get_token
+      else
+        puts "You must provide your frob as the argument"
+      end
     else
-      puts "You must provide your frob as the argument"
+      puts "You didn't say 'yes'"
     end
   end
 end
@@ -79,7 +86,7 @@ command :chktoken do |c|
 end
 
 pre do |global_options,command,options,args|
-  if command.name != :help
+  if !command.nil? && command.name != :help
     return_val = true
     if File.exists? 'api.yaml'
     api_info = File.open('api.yaml') { |file| YAML::load(file) }
@@ -93,7 +100,7 @@ pre do |global_options,command,options,args|
     end
     else
       puts "api.yaml not found; this is a YAML hash of your API key, secret key, and token"
-      File.open('api.yaml','w') { |file| YAML::dump({'api_key' => 'your api key', 'secret' => 'your secret'},file); }
+      File.open('api.yaml','w') { |file| YAML::dump({:api_key => 'your api key', :secret => 'your secret'},file); }
       puts "it has been created for you with dummy values"
       return_val = false
     end

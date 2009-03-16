@@ -64,9 +64,13 @@ Go to this URL and authorize your API Key.  Save the frob that is printed out
 
 This will authorize your app and print out your token.  Edit <tt>api.yaml</tt> and add your token.
 
+    :token: <<your token>>
+
+To verify:
+
     rtm ls
 
-Will list your incomplete tasks if all is well.
+This should list your incomplete tasks if all is well.
 
     rtm any contacts.getList
 
