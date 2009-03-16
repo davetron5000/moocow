@@ -34,6 +34,10 @@ module RTM
       raise "Cannot work with a api_key key" if @api_key.nil?
     end
 
+    def auto_timeline=(auto)
+      @auto_timeline = auto
+    end
+
     # Update the token used to access this endpoint
     def token=(token)
       @token = token
@@ -47,6 +51,16 @@ module RTM
       raise NoTokenException if token_required && (!@token || @token.nil?)
       params = {} if params.nil?
       params[:auth_token] = @token if !@token.nil?
+
+      if (@auto_timeline && !NO_TIMELINE[method])
+        response = @http.get(url_for('rtm.timelines.create',{'auth_token' => @token}));
+        if response['timeline']
+          params[:timeline] = response['timeline']
+        else
+          raise BadResponseException, "Expected a <timeline></timeline> type response, but got: #{response.body}"
+        end
+      end
+
       params_no_symbols = Hash.new
       params.each do |k,v|
         params_no_symbols[k.to_s] = v
