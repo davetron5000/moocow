@@ -7,6 +7,13 @@ spec = Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.summary = 'client to access the Remember The Milk API'
   s.files = %w(
+ext/hash_array.rb
+ext/string_camelize.rb
+lib/rtm/auth.rb
+lib/rtm/endpoint.rb
+lib/rtm/rtm.rb
+lib/rtm.rb
+bin/rtm
   )
   s.require_paths << 'ext'
   s.require_paths << 'lib'
@@ -14,7 +21,7 @@ spec = Gem::Specification.new do |s|
   s.extra_rdoc_files = ['README.rdoc']
   s.rdoc_options << '--title' << 'Remember The Milk Ruby Client' << '--main' << 'README.rdoc' << '-ri'
   s.add_dependency('httparty', '>= 0.3.1')
-  s.add_dependency('davetron5000-gli', '>= 0.1.4')
+  s.add_dependency('davetron5000-gli', '>= 0.1.5')
   s.bindir = 'bin'
   s.executables << 'rtm'
 end
