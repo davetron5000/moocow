@@ -43,11 +43,16 @@ module RTM
       @token = token
     end
 
+    def last_timeline
+      @last_timeline
+    end
+
     # Calls the RTM method with the given parameters
     # [method] the full RTM method, e.g. rtm.tasks.getList
     # [params] the parameters to pass, can be symbols.  api_key, token, and signature not required
     # [token_required] if false, this method will not require a token
     def call_method(method,params={},token_required=true)
+      @last_timeline = nil
       raise NoTokenException if token_required && (!@token || @token.nil?)
       params = {} if params.nil?
       params[:auth_token] = @token if !@token.nil?
@@ -55,7 +60,8 @@ module RTM
       if (@auto_timeline && !NO_TIMELINE[method])
         response = @http.get(url_for('rtm.timelines.create',{'auth_token' => @token}));
         if response['timeline']
-          params[:timeline] = response['timeline']
+          @last_timeline = response['timeline']
+          params[:timeline] = @last_timeline
         else
           raise BadResponseException, "Expected a <timeline></timeline> type response, but got: #{response.body}"
         end

@@ -84,16 +84,17 @@ class TC_testRTM < TestBase
 
   def test_auto_timeline
     ep = Endpoint.new('a','b',get_timeline_http())
-    ep.auto_timeline = true
     rtm = RTM::RTM.new(ep)
+    rtm.auto_timeline = true
     ep.token = 'blah'
     rtm.tasks.add(:name => 'foo')
+    assert_equal FAKE_TIMELINE,rtm.last_timeline
   end
 
   def test_auto_timeline_error
     ep = Endpoint.new('a','b',get_bad_timeline_http())
-    ep.auto_timeline = true
     rtm = RTM::RTM.new(ep)
+    rtm.auto_timeline = true
     ep.token = 'blah'
     assert_raises BadResponseException do
       rtm.tasks.add(:name => 'foo')

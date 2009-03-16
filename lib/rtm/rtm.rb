@@ -42,6 +42,15 @@ module RTM
       @endpoint.token=token
     end
 
+    def auto_timeline=(a)
+      @endpoint.auto_timeline=a
+    end
+
+    # Gets the last timeline that was used if in auto-timeline mode
+    def last_timeline
+      @endpoint.last_timeline
+    end
+
     # Get the auth method-space
     def auth
       RTMAuth.new(@endpoint)
