@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>: RTM::RTMMethodSpace [Ruby Client for Remember The Milk]</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>Class</span>
+          RTM::RTMMethodSpace
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a href="../../files/lib/rtm/rtm_rb.html">lib/rtm/rtm.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Parent:
+          <strong>Object</strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            <p>
+            Generic means of calling an <a href="RTM.html">RTM</a> method. This is
+            returned by <a href="RTM.html#M000011">RTM.method_missing</a> and, in most
+            cases, is the end point that calls an <a href="RTM.html">RTM</a> method.
+            </p>
+          </div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public class</h3>
+            <ol>
+              <li><a href="#M000016">new</a></li>
+            </ol>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000017">method_missing</a></li>
+            </ol>
+          </div>
+          <div id='section'>
+            <div id='methods'>
+              <h2>Public class methods</h2>
+              <div class='public-class method' id='method-M000016'>
+                <a name='M000016'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>new</span>
+                  <span class='arguments'>(name,endpoint)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Create an <a href="RTMMethodSpace.html">RTMMethodSpace</a>
+                  </p>
+                  <dl>
+                  <dt>name</dt><dd>the name of this method space, e.g. &#8216;tasks&#8217;
+                  
+                  </dd>
+                  <dt>endpoint</dt><dd>an endpoing to <a href="RTM.html">RTM</a>
+                  
+                  </dd>
+                  </dl>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000016-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000016-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 88</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>,<span class="ruby-identifier">endpoint</span>)&#x000A;      <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span>&#x000A;      <span class="ruby-ivar">@endpoint</span> = <span class="ruby-identifier">endpoint</span>&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;No endpoint&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">nil?</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <h2>Public instance methods</h2>
+              <div class='public-instance method' id='method-M000017'>
+                <a name='M000017'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>method_missing</span>
+                  <span class='arguments'>(symbol,*args)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Calls the method on <a href="RTM.html">RTM</a> in most cases. The only
+                  exception is if this <a href="RTMMethodSpace.html">RTMMethodSpace</a> is
+                  &#8216;tasks&#8217; and you call the &#8216;notes&#8217; method on it: a
+                  new <a href="RTMMethodSpace.html">RTMMethodSpace</a> is returned for the
+                  &#8216;rtm.tasks.notes&#8217; method-space.
+                  </p>
+                  <p>
+                  This returns a response object as from HTTParty, dereferenced into <rsp>.
+                  So, for example, if you called the &#8216;tasks.getList&#8217; method, you
+                  would get a hash that could be accessed via response[&#8216;tasks&#8217;].
+                  This object is a <a href="../Hash.html">Hash</a> and <a
+                  href="../Array.html">Array</a> structure that mimcs the XML returned by <a
+                  href="RTM.html">RTM</a>. One quirk is that for methods that could return 1
+                  or more of the same item (tasks.getList is a good example; it will return
+                  multilple <list> elements unless you restrict by list, in which case it
+                  returns only one <list> element). Because HTTParty doesn&#8217;t understand
+                  this, you may find it convienient to convert such results to arrays. the
+                  to_array extension on <a href="../Hash.html">Hash</a> and <a
+                  href="../Array.html">Array</a> accomplish this:
+                  </p>
+                  <pre>response = rtm.tasks.getList(:filter =&gt; 'list:Work')&#x000A;response['tasks']['list'].as_array.eadch do |list|&#x000A;  list['taskseries'].as_array.each do |task|&#x000A;    puts task['name']&#x000A;  end&#x000A;end</pre>
+                  <p>
+                  So, call to_array on anything you expect to be a list.
+                  </p>
+                  <p>
+                  This method raises either a <a
+                  href="BadResponseException.html">BadResponseException</a> if you got a bad
+                  or garbled response from <a href="RTM.html">RTM</a> or a <a
+                  href="VerificationException.html">VerificationException</a> if you got a
+                  non-OK response.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000017-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000017-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 115</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'tasks'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">symbol</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'notes'</span>)&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethodSpace</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;tasks.notes&quot;</span>,<span class="ruby-ivar">@endpoint</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-identifier">rtm_method</span> = <span class="ruby-node">&quot;rtm.#{@name}.#{symbol.to_s.camelize}&quot;</span>&#x000A;        <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">call_method</span>(<span class="ruby-identifier">rtm_method</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

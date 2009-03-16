@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Thu Mar 12 22:10:15 -0400 2009</span>
+          <span class='datetime'>Sun Mar 15 21:40:46 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -43,7 +43,7 @@
             href="http://www.rememberthemilk.com">Remember">www.rememberthemilk.com">Remember</a>
             The Milk</a>.
             </p>
-            <pre>rtm = RTM.new(your_api_key,your_secret)&#x000A;auth = rtm.auth&#x000A;url = auth.url&#x000A;frob = auth.frob&#x000A;# Send user to this URL&#x000A;# They will authorize your app's api_key via the RTM website.&#x000A;# store the frob somewhere, you will need it&#x000A;#&#x000A;# When they return...&#x000A;auth.frob=frob&#x000A;rtm.token=auth.get_token&#x000A;# store the token for all time&#x000A;&#x000A;rtm.tasks.getList&#x000A;rtm.groups.delete&#x000A;rtm.tasks.notes.add</pre>
+            <pre>rtm = RTM.new(Endpoint.new(your_api_key,your_secret))&#x000A;auth = rtm.auth&#x000A;url = auth.url&#x000A;frob = auth.frob&#x000A;# Send user to this URL&#x000A;# They will authorize your app's api_key via the RTM website.&#x000A;# store the frob somewhere, you will need it&#x000A;#&#x000A;# When they return...&#x000A;auth.frob=frob&#x000A;rtm.token=auth.get_token&#x000A;# store the token for all time&#x000A;&#x000A;rtm.tasks.getList&#x000A;rtm.groups.delete&#x000A;rtm.tasks.notes.add</pre>
             <p>
             And so forth. Basically, you can call the <a
             href="../classes/RTM.html">RTM</a> methods as if they were real methods.

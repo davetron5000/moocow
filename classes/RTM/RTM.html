@@ -36,7 +36,7 @@
         </ol>
         <div class='parent'>
           Parent:
-          <strong><a href="RTMBase.html">RTM::RTMBase</a></strong>
+          <strong>Object</strong>
         </div>
       </div>
       <div id='content'>
@@ -46,7 +46,7 @@
             Root access to <a href="RTM.html">RTM</a> api. Most methods work just like
             the api demonstrates, however auth is a bit different:
             </p>
-            <pre>rtm = RTM.new(api_key,secret)&#x000A;auth_url = rtm.auth.url&#x000A;# Send user to url&#x000A;# When they click authorize and return to your app do:&#x000A;rtm.token=rtm.auth.get_token</pre>
+            <pre>rtm = RTM.new(Endpoint.new(api_key,secret))&#x000A;auth_url = rtm.auth.url&#x000A;# Send user to url&#x000A;# When they click authorize and return to your app do:&#x000A;rtm.token=rtm.auth.get_token</pre>
             <p>
             This is a one time thing, so cache the token somewhere and you are good to
             go:
@@ -63,57 +63,47 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000004">new</a></li>
+              <li><a href="#M000005">new</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000006">auth</a></li>
-              <li><a href="#M000008">checkToken</a></li>
-              <li><a href="#M000007">check_token</a></li>
-              <li><a href="#M000010">method_missing</a></li>
-              <li><a href="#M000009">test</a></li>
-              <li><a href="#M000005">token=</a></li>
+              <li><a href="#M000007">auth</a></li>
+              <li><a href="#M000009">checkToken</a></li>
+              <li><a href="#M000008">check_token</a></li>
+              <li><a href="#M000011">method_missing</a></li>
+              <li><a href="#M000010">test</a></li>
+              <li><a href="#M000006">token=</a></li>
             </ol>
           </div>
           <div id='section'>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000004'>
-                <a name='M000004'>      </a>
+              <div class='public-class method' id='method-M000005'>
+                <a name='M000005'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
-                  <span class='arguments'>(api_key,secret,token=nil,http=nil)</span>
+                  <span class='arguments'>(endpoint)</span>
                 </div>
                 <div class='description'>
                   <p>
                   Create access to <a href="RTM.html">RTM</a>
                   </p>
                   <dl>
-                  <dt>api_key</dt><dd>your api key
-                  
-                  </dd>
-                  <dt>secret</dt><dd>your shared secret
-                  
-                  </dd>
-                  <dt>token</dt><dd>the token your user has acquired after authorizing (via <a
-                  href="RTMAuth.html">RTMAuth</a>)
-                  
-                  </dd>
-                  <dt>http</dt><dd>HTTP implementation; mostly useful for testing
+                  <dt>endpoint</dt><dd>an <a href="Endpoint.html">Endpoint</a> to <a href="RTM.html">RTM</a>
                   
                   </dd>
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000004-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000005-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000004-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 36</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">api_key</span>,<span class="ruby-identifier">secret</span>,<span class="ruby-identifier">token</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">http</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">api_key</span>,<span class="ruby-identifier">secret</span>,<span class="ruby-identifier">http</span>)&#x000A;      <span class="ruby-ivar">@token</span> = <span class="ruby-identifier">token</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000005-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 36</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">endpoint</span>)&#x000A;      <span class="ruby-ivar">@endpoint</span> = <span class="ruby-identifier">endpoint</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000006'>
-                <a name='M000006'>      </a>
+              <div class='public-instance method' id='method-M000007'>
+                <a name='M000007'>      </a>
                 <div class='synopsis'>
                   <span class='name'>auth</span>
                   <span class='arguments'>()</span>
@@ -124,26 +114,26 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000007-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000006-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 47</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">auth</span>&#x000A;      <span class="ruby-constant">RTMAuth</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@api_key</span>,<span class="ruby-ivar">@secret</span>,<span class="ruby-identifier">http</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000007-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 46</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">auth</span>&#x000A;      <span class="ruby-constant">RTMAuth</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@endpoint</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000008'>
-                <a name='M000008'>      </a>
+              <div class='public-instance method' id='method-M000009'>
+                <a name='M000009'>      </a>
                 <div class='synopsis'>
                   <span class='name'>checkToken</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Alias for <a href="RTM.html#M000007">check_token</a>
+                  Alias for <a href="RTM.html#M000008">check_token</a>
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000007'>
-                <a name='M000007'>      </a>
+              <div class='public-instance method' id='method-M000008'>
+                <a name='M000008'>      </a>
                 <div class='synopsis'>
                   <span class='name'>check_token</span>
                   <span class='arguments'>()</span>
@@ -155,14 +145,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000007-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000008-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000007-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 52</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_token</span>&#x000A;      <span class="ruby-identifier">response</span> = <span class="ruby-identifier">http</span>.<span class="ruby-identifier">get</span>(<span class="ruby-identifier">url_for</span>(<span class="ruby-value str">'rtm.auth.checkToken'</span>,{<span class="ruby-value str">'auth_token'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@token</span>}))&#x000A;      <span class="ruby-keyword kw">begin</span>&#x000A;        <span class="ruby-identifier">verify</span> <span class="ruby-identifier">response</span>&#x000A;      <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">VerificationException</span>&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidTokenException</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000008-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 51</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_token</span>&#x000A;      <span class="ruby-keyword kw">begin</span>&#x000A;        <span class="ruby-identifier">response</span> = <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">call_method</span>(<span class="ruby-value str">'rtm.auth.checkToken'</span>)&#x000A;      <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">VerificationException</span>&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidTokenException</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000010'>
-                <a name='M000010'>      </a>
+              <div class='public-instance method' id='method-M000011'>
+                <a name='M000011'>      </a>
                 <div class='synopsis'>
                   <span class='name'>method_missing</span>
                   <span class='arguments'>(symbol,*args)</span>
@@ -171,20 +161,20 @@
                   <p>
                   Gateway to all other method-spaces. Assumes you are making a valid call on
                   <a href="RTM.html">RTM</a>. Essentially, <b>any</b> method will give you an
-                  <a href="RTMMethod.html">RTMMethod</a> object keyed to the method name,
-                  e.g. rtm.foobar will assume that <a href="RTM.html">RTM</a> has a
+                  <a href="RTMMethodSpace.html">RTMMethodSpace</a> object keyed to the method
+                  name, e.g. rtm.foobar will assume that <a href="RTM.html">RTM</a> has a
                   &#8220;foobar&#8221; methodspace. method names are converted to camelcase.
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000010-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000011-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000010-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 73</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>&#x000A;        <span class="ruby-identifier">rtm_object</span> = <span class="ruby-identifier">camelize</span>(<span class="ruby-identifier">symbol</span>.<span class="ruby-identifier">to_s</span>)&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethod</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rtm_object</span>,<span class="ruby-ivar">@api_key</span>,<span class="ruby-ivar">@secret</span>,<span class="ruby-ivar">@token</span>,<span class="ruby-identifier">http</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000011-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 69</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>&#x000A;        <span class="ruby-identifier">rtm_object</span> = <span class="ruby-identifier">symbol</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">camelize</span>&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethodSpace</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rtm_object</span>,<span class="ruby-ivar">@endpoint</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000009'>
-                <a name='M000009'>      </a>
+              <div class='public-instance method' id='method-M000010'>
+                <a name='M000010'>      </a>
                 <div class='synopsis'>
                   <span class='name'>test</span>
                   <span class='arguments'>()</span>
@@ -192,18 +182,18 @@
                 <div class='description'>
                   <p>
                   Get the test method-space (Kernel defines a test method, making <a
-                  href="RTM.html#M000010">method_missing</a> problematic)
+                  href="RTM.html#M000011">method_missing</a> problematic)
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000009-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000010-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000009-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 65</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test</span>&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethod</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'test'</span>,<span class="ruby-ivar">@api_key</span>,<span class="ruby-ivar">@secret</span>,<span class="ruby-ivar">@token</span>,<span class="ruby-identifier">http</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000010-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 61</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test</span>&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethodSpace</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'test'</span>,<span class="ruby-ivar">@endpoint</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000005'>
-                <a name='M000005'>      </a>
+              <div class='public-instance method' id='method-M000006'>
+                <a name='M000006'>      </a>
                 <div class='synopsis'>
                   <span class='name'>token=</span>
                   <span class='arguments'>(token)</span>
@@ -214,10 +204,10 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000005-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000005-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 42</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">token=</span>(<span class="ruby-identifier">token</span>)&#x000A;      <span class="ruby-ivar">@token</span> = <span class="ruby-identifier">token</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000006-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 41</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">token=</span>(<span class="ruby-identifier">token</span>)&#x000A;      <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">token</span>=<span class="ruby-identifier">token</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>
