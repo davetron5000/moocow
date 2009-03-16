@@ -20,7 +20,7 @@ module RTM
     # [application_type] if :desktop, a frob is gotten and the URL is suitable for a desktop application.  if :web, a url suitable for the web is returned. 
     # [callback_url] the callback URL you want the user sent to after they authorize.  This will have the frob and you must call frob= before get_token with the frob that was given to you.
     def url(perms = :delete, application_type=:desktop, callback_url=nil)
-      @frob = get_frob if application_type = :desktop
+      @frob = get_frob if application_type == :desktop
       params = {'perms' => perms.to_s}
       params['frob'] = @frob if @frob
       params['callbackURL'] = callback_url if callback_url
