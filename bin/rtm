@@ -5,7 +5,7 @@ require 'rubygems'
 require 'gli'
 require 'httparty'
 require 'rtm'
-require 'ext/hash_array'
+require 'hash_array'
 
 include GLI
 

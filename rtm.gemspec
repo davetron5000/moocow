@@ -1,6 +1,6 @@
 spec = Gem::Specification.new do |s| 
   s.name = 'rtm'
-  s.version = '0.1.0'
+  s.version = '0.1.1'
   s.author = 'David Copeland'
   s.email = 'davidcopeland@naildrivin5.com'
   s.homepage = 'http://davetron5000.github.com/rtm'

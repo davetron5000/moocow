@@ -1,6 +1,24 @@
-== Ruby Client for Remember The Milk
+= Ruby Client for Remember The Milk
 
-This is a very lightweight and easy-to-use client for <a href="http://www.rememberthemilk.com">Remember The Milk</a>.
+Author::   Dave Copeland (mailto:davetron5000 at g mail dot com)
+Copyright:: Copyright (c) 2009 by Dave Copeland
+License:: Distributes under the Apache License, see LICENSE.txt in the source distro
+
+== Overview
+
+This is a very lightweight and easy-to-use client for Remember[http://www.rememberthemilk.com] The[http://www.rememberthemilk.com] Milk[http://www.rememberthemilk.com]
+
+    rtm = RTM.new(Endpoint.new(your_api_key,your_secret))
+    rtm.token = user_token
+    response = rtm.tasks.getList
+    response.tasks.list.as_array.each do |list|
+      # this is an RTM list of taskseries
+    end
+
+=== Authorization
+
+Authorization is a bit tricky, but you only need to do it one time.  This example shows
+command line/desktop usage
 
     rtm = RTM.new(Endpoint.new(your_api_key,your_secret))
     auth = rtm.auth
@@ -21,23 +39,29 @@ This is a very lightweight and easy-to-use client for <a href="http://www.rememb
 
 And so forth.  Basically, you can call the RTM methods as if they were real methods.
 
-To examine the output, you have two choices:
+=== Responses
 
-    response = rtm.tasks.getList
-    response.tasks.list.as_array.each do |list|
-      # this is an RTM list of taskseries
-    end
-
-OR
+As shown above, you can simply navigate the XML returned by method names.  This uses Hash.method_missing and can be dicey, so you can also navigate a bit safer via
 
     response = rtm.tasks.getList
     response['tasks']['list'].as_array.each do |list|
       # this is an RTM list of taskseries
     end
 
-The second form is safer, as you avoid possible clashes on existing method names.  Note that for any element that you want to treat as a list, you must call as_array on it, to ensure that it gets turned into a list.  The underlying HTTParty code doesn't know if an XML element is supposed to be a list or just a singular.
+Note that for any element that you want to treat as a list, you must call as_array on it, to ensure that it gets turned into a list.  The underlying HTTParty code doesn't know if an XML element is supposed to be a list or just a singular.
 
 <i>Note that you can use Ruby-style conventions instead of camel-case, e.g. <tt>rtm.tasks.get_list</tt></i>
+
+=== Timelines
+
+Many methods require timelines; this is the way that RTM provides for undo-type features.  If you don't really care about this, or want it done for you, you can specify auto timeline creation:
+
+
+    rtm.auto_timeline=true
+    rtm.tasks.add(:name => 'My new task')
+    timeline = rtm.last_timeline
+
+This will create a timeline for you, and use it to create the task.  The list of methods that <b>do not</b> require timelines is used to determine if this is done, and is based on the RTM documentation at the time of this writing.
 
 == Basic Command Line
 
@@ -76,11 +100,6 @@ This should list your incomplete tasks if all is well.
 
 Will print out a hashdump of what RTM returns for this method.
    
-== TODO
-
-* The auth scheme kinda sucks; only works for command line and not very helpful
-* Would be nice to have methods that require timelines actually get them if you don't specify one
-
 == Links
 
 * http://github.com/davetron5000/rtm - Source code
