@@ -111,7 +111,7 @@ module RTM
     # results to arrays.  the to_array extension on Hash and Array accomplish this:
     #
     #     response = rtm.tasks.getList(:filter => 'list:Work')
-    #     response['tasks']['list'].as_array.eadch do |list|
+    #     response['tasks']['list'].as_array.each do |list|
     #       list['taskseries'].as_array.each do |task|
     #         puts task['name']
     #       end
