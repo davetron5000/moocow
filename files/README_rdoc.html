@@ -25,47 +25,79 @@
   <body class='page'>
     <div class='file' id='wrapper'>
       <div class='header'>
-        <h1 class='name'>README.rdoc</h1>
+        <div class='name'>README.rdoc</div>
         <div class='paths'>
           README.rdoc
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Sun Mar 15 22:29:37 -0400 2009</span>
+          <span class='datetime'>Wed Apr 22 22:37:56 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
         <div id='text'>
           <div id='description'>
-            <h2>Ruby Client for Remember The Milk</h2>
+            <h1>Ruby Client for Remember The Milk</h1>
+            <table>
+            <tr><td valign="top">Author:</td><td>Dave Copeland (<a href="mailto:davetron5000">davetron5000</a> at g mail dot
+            com)
+            
+            </td></tr>
+            <tr><td valign="top">Copyright:</td><td>Copyright &#169; 2009 by Dave Copeland
+            
+            </td></tr>
+            <tr><td valign="top">License:</td><td>Distributes under the Apache License, see LICENSE.txt in the source distro
+            
+            </td></tr>
+            </table>
+            <h2>Install</h2>
+            <pre>sudo gem install moocow</pre>
+            <h2>Overview</h2>
             <p>
-            This is a very lightweight and easy-to-use client for <a href=&#8220;<a
-            href="http://www.rememberthemilk.com">Remember">www.rememberthemilk.com">Remember</a>
-            The Milk</a>.
+            This is a very lightweight and easy-to-use client for [<a
+            href="http://www.rememberthemilk.com">www.rememberthemilk.com</a>]
+            </p>
+            <pre>require 'moocow'&#x000A;rtm = RTM.new(Endpoint.new(your_api_key,your_secret))&#x000A;rtm.token = user_token&#x000A;response = rtm.tasks.getList&#x000A;response.tasks.list.as_array.each do |list|&#x000A;  # this is an RTM list of taskseries&#x000A;end</pre>
+            <h3>Authorization</h3>
+            <p>
+            Authorization is a bit tricky, but you only need to do it one time. This
+            example shows command line/desktop usage
             </p>
             <pre>rtm = RTM.new(Endpoint.new(your_api_key,your_secret))&#x000A;auth = rtm.auth&#x000A;url = auth.url&#x000A;frob = auth.frob&#x000A;# Send user to this URL&#x000A;# They will authorize your app's api_key via the RTM website.&#x000A;# store the frob somewhere, you will need it&#x000A;#&#x000A;# When they return...&#x000A;auth.frob=frob&#x000A;rtm.token=auth.get_token&#x000A;# store the token for all time&#x000A;&#x000A;rtm.tasks.getList&#x000A;rtm.groups.delete&#x000A;rtm.tasks.notes.add</pre>
             <p>
             And so forth. Basically, you can call the <a
             href="../classes/RTM.html">RTM</a> methods as if they were real methods.
             </p>
+            <h3>Responses</h3>
             <p>
-            To examine the output, you have two choices:
-            </p>
-            <pre>response = rtm.tasks.getList&#x000A;response.tasks.list.as_array.each do |list|&#x000A;  # this is an RTM list of taskseries&#x000A;end</pre>
-            <p>
-            OR
+            As shown above, you can simply navigate the XML returned by method names.
+            This uses <a href="../classes/Hash.html#M000003">Hash.method_missing</a>
+            and can be dicey, so you can also navigate a bit safer via
             </p>
             <pre>response = rtm.tasks.getList&#x000A;response['tasks']['list'].as_array.each do |list|&#x000A;  # this is an RTM list of taskseries&#x000A;end</pre>
             <p>
-            The second form is safer, as you avoid possible clashes on existing method
-            names. Note that for any element that you want to treat as a list, you must
-            call as_array on it, to ensure that it gets turned into a list. The
-            underlying HTTParty code doesn&#8217;t know if an XML element is supposed
-            to be a list or just a singular.
+            Note that for any element that you want to treat as a list, you must call
+            as_array on it, to ensure that it gets turned into a list. The underlying
+            HTTParty code doesn&#8217;t know if an XML element is supposed to be a list
+            or just a singular.
             </p>
             <p>
             <em>Note that you can use Ruby-style conventions instead of camel-case,
             e.g. <tt>rtm.tasks.get_list</tt></em>
+            </p>
+            <h3>Timelines</h3>
+            <p>
+            Many methods require timelines; this is the way that <a
+            href="../classes/RTM.html">RTM</a> provides for undo-type features. If you
+            don&#8217;t really care about this, or want it done for you, you can
+            specify auto timeline creation:
+            </p>
+            <pre>rtm.auto_timeline=true&#x000A;rtm.tasks.add(:name =&gt; 'My new task')&#x000A;timeline = rtm.last_timeline</pre>
+            <p>
+            This will create a timeline for you, and use it to create the task. The
+            list of methods that <b>do not</b> require timelines is used to determine
+            if this is done, and is based on the <a href="../classes/RTM.html">RTM</a>
+            documentation at the time of this writing.
             </p>
             <h2>Basic Command Line</h2>
             <p>
@@ -125,17 +157,6 @@
             Will print out a hashdump of what <a href="../classes/RTM.html">RTM</a>
             returns for this method.
             </p>
-            <h2>TODO</h2>
-            <ul>
-            <li>The auth scheme kinda sucks; only works for command line and not very
-            helpful
-            
-            </li>
-            <li>Would be nice to have methods that require timelines actually get them if
-            you don&#8217;t specify one
-            
-            </li>
-            </ul>
             <h2>Links</h2>
             <ul>
             <li><a

@@ -31,7 +31,7 @@
         </h1>
         <ol class='paths'>
           <li>
-            <a href="../../files/lib/rtm/rtm_rb.html">lib/rtm/rtm.rb</a>
+            <a href="../../files/lib/moocow/moocow_rb.html">lib/moocow/moocow.rb</a>
           </li>
         </ol>
         <div class='parent'>
@@ -67,11 +67,13 @@
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000007">auth</a></li>
-              <li><a href="#M000009">checkToken</a></li>
-              <li><a href="#M000008">check_token</a></li>
-              <li><a href="#M000011">method_missing</a></li>
-              <li><a href="#M000010">test</a></li>
+              <li><a href="#M000009">auth</a></li>
+              <li><a href="#M000007">auto_timeline=</a></li>
+              <li><a href="#M000011">checkToken</a></li>
+              <li><a href="#M000010">check_token</a></li>
+              <li><a href="#M000008">last_timeline</a></li>
+              <li><a href="#M000013">method_missing</a></li>
+              <li><a href="#M000012">test</a></li>
               <li><a href="#M000006">token=</a></li>
             </ol>
           </div>
@@ -98,12 +100,12 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000005-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000005-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 36</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">endpoint</span>)&#x000A;      <span class="ruby-ivar">@endpoint</span> = <span class="ruby-identifier">endpoint</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000005-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 36</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">endpoint</span>)&#x000A;      <span class="ruby-ivar">@endpoint</span> = <span class="ruby-identifier">endpoint</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000007'>
-                <a name='M000007'>      </a>
+              <div class='public-instance method' id='method-M000009'>
+                <a name='M000009'>      </a>
                 <div class='synopsis'>
                   <span class='name'>auth</span>
                   <span class='arguments'>()</span>
@@ -114,26 +116,39 @@
                   </p>
                 </div>
                 <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000009-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000009-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 55</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">auth</span>&#x000A;      <span class="ruby-constant">RTMAuth</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@endpoint</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000007'>
+                <a name='M000007'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>auto_timeline=</span>
+                  <span class='arguments'>(a)</span>
+                </div>
+                <div class='source'>
                   <a class='source-toggle' href='#' onclick="toggleCode('M000007-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000007-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 46</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">auth</span>&#x000A;      <span class="ruby-constant">RTMAuth</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@endpoint</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000007-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 45</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">auto_timeline=</span>(<span class="ruby-identifier">a</span>)&#x000A;      <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">auto_timeline</span>=<span class="ruby-identifier">a</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000009'>
-                <a name='M000009'>      </a>
+              <div class='public-instance method' id='method-M000011'>
+                <a name='M000011'>      </a>
                 <div class='synopsis'>
                   <span class='name'>checkToken</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Alias for <a href="RTM.html#M000008">check_token</a>
+                  Alias for <a href="RTM.html#M000010">check_token</a>
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000008'>
-                <a name='M000008'>      </a>
+              <div class='public-instance method' id='method-M000010'>
+                <a name='M000010'>      </a>
                 <div class='synopsis'>
                   <span class='name'>check_token</span>
                   <span class='arguments'>()</span>
@@ -145,14 +160,32 @@
                   </p>
                 </div>
                 <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000010-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000010-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 60</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_token</span>&#x000A;      <span class="ruby-keyword kw">begin</span>&#x000A;        <span class="ruby-identifier">response</span> = <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">call_method</span>(<span class="ruby-value str">'rtm.auth.checkToken'</span>)&#x000A;      <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">VerificationException</span>&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidTokenException</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000008'>
+                <a name='M000008'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>last_timeline</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Gets the last timeline that was used if in auto-timeline mode
+                  </p>
+                </div>
+                <div class='source'>
                   <a class='source-toggle' href='#' onclick="toggleCode('M000008-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000008-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 51</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_token</span>&#x000A;      <span class="ruby-keyword kw">begin</span>&#x000A;        <span class="ruby-identifier">response</span> = <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">call_method</span>(<span class="ruby-value str">'rtm.auth.checkToken'</span>)&#x000A;      <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">VerificationException</span>&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidTokenException</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000008-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 50</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">last_timeline</span>&#x000A;      <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">last_timeline</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000011'>
-                <a name='M000011'>      </a>
+              <div class='public-instance method' id='method-M000013'>
+                <a name='M000013'>      </a>
                 <div class='synopsis'>
                   <span class='name'>method_missing</span>
                   <span class='arguments'>(symbol,*args)</span>
@@ -167,14 +200,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000011-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000013-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000011-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 69</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>&#x000A;        <span class="ruby-identifier">rtm_object</span> = <span class="ruby-identifier">symbol</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">camelize</span>&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethodSpace</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rtm_object</span>,<span class="ruby-ivar">@endpoint</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000013-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 78</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>&#x000A;        <span class="ruby-identifier">rtm_object</span> = <span class="ruby-identifier">symbol</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">camelize</span>&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethodSpace</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rtm_object</span>,<span class="ruby-ivar">@endpoint</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000010'>
-                <a name='M000010'>      </a>
+              <div class='public-instance method' id='method-M000012'>
+                <a name='M000012'>      </a>
                 <div class='synopsis'>
                   <span class='name'>test</span>
                   <span class='arguments'>()</span>
@@ -182,14 +215,14 @@
                 <div class='description'>
                   <p>
                   Get the test method-space (Kernel defines a test method, making <a
-                  href="RTM.html#M000011">method_missing</a> problematic)
+                  href="RTM.html#M000013">method_missing</a> problematic)
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000010-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000012-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000010-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 61</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test</span>&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethodSpace</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'test'</span>,<span class="ruby-ivar">@endpoint</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000012-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 70</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test</span>&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethodSpace</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'test'</span>,<span class="ruby-ivar">@endpoint</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000006'>
@@ -207,7 +240,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000006-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 41</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">token=</span>(<span class="ruby-identifier">token</span>)&#x000A;      <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">token</span>=<span class="ruby-identifier">token</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000006-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 41</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">token=</span>(<span class="ruby-identifier">token</span>)&#x000A;      <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">token</span>=<span class="ruby-identifier">token</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

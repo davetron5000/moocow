@@ -31,7 +31,7 @@
         </h1>
         <ol class='paths'>
           <li>
-            <a href="../../files/lib/rtm/rtm_rb.html">lib/rtm/rtm.rb</a>
+            <a href="../../files/lib/moocow/moocow_rb.html">lib/moocow/moocow.rb</a>
           </li>
         </ol>
         <div class='parent'>
@@ -44,7 +44,7 @@
           <div id='description'>
             <p>
             Generic means of calling an <a href="RTM.html">RTM</a> method. This is
-            returned by <a href="RTM.html#M000011">RTM.method_missing</a> and, in most
+            returned by <a href="RTM.html#M000013">RTM.method_missing</a> and, in most
             cases, is the end point that calls an <a href="RTM.html">RTM</a> method.
             </p>
           </div>
@@ -52,18 +52,18 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000017">new</a></li>
+              <li><a href="#M000020">new</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000018">method_missing</a></li>
+              <li><a href="#M000021">method_missing</a></li>
             </ol>
           </div>
           <div id='section'>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000017'>
-                <a name='M000017'>      </a>
+              <div class='public-class method' id='method-M000020'>
+                <a name='M000020'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
                   <span class='arguments'>(name,endpoint)</span>
@@ -82,15 +82,15 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000017-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000020-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000017-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 88</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>,<span class="ruby-identifier">endpoint</span>)&#x000A;      <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span>&#x000A;      <span class="ruby-ivar">@endpoint</span> = <span class="ruby-identifier">endpoint</span>&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;No endpoint&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">nil?</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000020-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 97</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>,<span class="ruby-identifier">endpoint</span>)&#x000A;      <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span>&#x000A;      <span class="ruby-ivar">@endpoint</span> = <span class="ruby-identifier">endpoint</span>&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;No endpoint&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">nil?</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000018'>
-                <a name='M000018'>      </a>
+              <div class='public-instance method' id='method-M000021'>
+                <a name='M000021'>      </a>
                 <div class='synopsis'>
                   <span class='name'>method_missing</span>
                   <span class='arguments'>(symbol,*args)</span>
@@ -117,7 +117,7 @@
                   to_array extension on <a href="../Hash.html">Hash</a> and <a
                   href="../Array.html">Array</a> accomplish this:
                   </p>
-                  <pre>response = rtm.tasks.getList(:filter =&gt; 'list:Work')&#x000A;response['tasks']['list'].as_array.eadch do |list|&#x000A;  list['taskseries'].as_array.each do |task|&#x000A;    puts task['name']&#x000A;  end&#x000A;end</pre>
+                  <pre>response = rtm.tasks.getList(:filter =&gt; 'list:Work')&#x000A;response['tasks']['list'].as_array.each do |list|&#x000A;  list['taskseries'].as_array.each do |task|&#x000A;    puts task['name']&#x000A;  end&#x000A;end</pre>
                   <p>
                   So, call to_array on anything you expect to be a list.
                   </p>
@@ -130,10 +130,10 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000018-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000021-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000018-source'><span class="ruby-comment cmt"># File lib/rtm/rtm.rb, line 115</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'tasks'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">symbol</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'notes'</span>)&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethodSpace</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;tasks.notes&quot;</span>,<span class="ruby-ivar">@endpoint</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-identifier">rtm_method</span> = <span class="ruby-node">&quot;rtm.#{@name}.#{symbol.to_s.camelize}&quot;</span>&#x000A;        <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">call_method</span>(<span class="ruby-identifier">rtm_method</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000021-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 124</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'tasks'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">symbol</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'notes'</span>)&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethodSpace</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;tasks.notes&quot;</span>,<span class="ruby-ivar">@endpoint</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-identifier">rtm_method</span> = <span class="ruby-node">&quot;rtm.#{@name}.#{symbol.to_s.camelize}&quot;</span>&#x000A;        <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">call_method</span>(<span class="ruby-identifier">rtm_method</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>
