@@ -4,10 +4,15 @@ Author::   Dave Copeland (mailto:davetron5000 at g mail dot com)
 Copyright:: Copyright (c) 2009 by Dave Copeland
 License:: Distributes under the Apache License, see LICENSE.txt in the source distro
 
+== Install
+
+    sudo gem install moocow
+
 == Overview
 
-This is a very lightweight and easy-to-use client for Remember[http://www.rememberthemilk.com] The[http://www.rememberthemilk.com] Milk[http://www.rememberthemilk.com]
+This is a very lightweight and easy-to-use client for [http://www.rememberthemilk.com]
 
+    require 'moocow'
     rtm = RTM.new(Endpoint.new(your_api_key,your_secret))
     rtm.token = user_token
     response = rtm.tasks.getList
