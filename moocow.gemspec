@@ -1,6 +1,6 @@
 spec = Gem::Specification.new do |s| 
   s.name = 'moocow'
-  s.version = '0.1.2'
+  s.version = '0.1.3'
   s.author = 'David Copeland'
   s.email = 'davidcopeland@naildrivin5.com'
   s.homepage = 'http://davetron5000.github.com/moocow'
@@ -9,10 +9,10 @@ spec = Gem::Specification.new do |s|
   s.files = %w(
 ext/hash_array.rb
 ext/string_camelize.rb
-lib/rtm/auth.rb
-lib/rtm/endpoint.rb
-lib/rtm/rtm.rb
-lib/rtm.rb
+lib/moocow/auth.rb
+lib/moocow/endpoint.rb
+lib/moocow/moocow.rb
+lib/moocow.rb
 bin/rtm
   )
   s.require_paths << 'ext'
