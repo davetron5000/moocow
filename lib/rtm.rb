@@ -1,5 +1,0 @@
-require 'rtm/rtm'
-require 'rtm/auth'
-require 'rtm/endpoint'
-require 'hash_array'
-require 'string_camelize'

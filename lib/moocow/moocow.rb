@@ -2,8 +2,8 @@ require 'rubygems'
 require 'string_camelize'
 require 'digest/md5'
 require 'cgi'
-require 'rtm/auth'
-require 'rtm/endpoint'
+require 'moocow/auth'
+require 'moocow/endpoint'
 
 module RTM
 

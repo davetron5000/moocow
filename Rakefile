@@ -19,7 +19,7 @@ Rake::RDocTask.new do |rd|
   rd.title = 'Ruby Client for Remember The Milk'
 end
 
-spec = eval(File.read('rtm.gemspec'))
+spec = eval(File.read('moocow.gemspec'))
  
 Rake::GemPackageTask.new(spec) do |pkg|
     pkg.need_tar = true

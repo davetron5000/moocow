@@ -1,11 +1,11 @@
 spec = Gem::Specification.new do |s| 
-  s.name = 'rtm'
-  s.version = '0.1.1'
+  s.name = 'moocow'
+  s.version = '0.1.2'
   s.author = 'David Copeland'
   s.email = 'davidcopeland@naildrivin5.com'
-  s.homepage = 'http://davetron5000.github.com/rtm'
+  s.homepage = 'http://davetron5000.github.com/moocow'
   s.platform = Gem::Platform::RUBY
-  s.summary = 'client to access the Remember The Milk API'
+  s.summary = 'Ruby Client for Remember The Milk'
   s.files = %w(
 ext/hash_array.rb
 ext/string_camelize.rb
@@ -21,8 +21,9 @@ bin/rtm
   s.extra_rdoc_files = ['README.rdoc']
   s.rdoc_options << '--title' << 'Remember The Milk Ruby Client' << '--main' << 'README.rdoc' << '-ri'
   s.add_dependency('httparty', '>= 0.3.1')
-  s.add_dependency('davetron5000-gli', '>= 0.1.5')
+  s.add_dependency('gli', '>= 0.1.5')
   s.bindir = 'bin'
+  s.rubyforge_project = 'moocow'
   s.executables << 'rtm'
 end
 
