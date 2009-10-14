@@ -13,7 +13,8 @@ License:: Distributes under the Apache License, see LICENSE.txt in the source di
 This is a very lightweight and easy-to-use client for [http://www.rememberthemilk.com]
 
     require 'moocow'
-    rtm = RTM.new(Endpoint.new(your_api_key,your_secret))
+
+    rtm = RTM::RTM.new(RTM::Endpoint.new(your_api_key,your_secret))
     rtm.token = user_token
     response = rtm.tasks.getList
     response.tasks.list.as_array.each do |list|
