@@ -1,6 +1,6 @@
 spec = Gem::Specification.new do |s| 
   s.name = 'moocow'
-  s.version = '0.1.3'
+  s.version = '0.1.4'
   s.author = 'David Copeland'
   s.email = 'davidcopeland@naildrivin5.com'
   s.homepage = 'http://davetron5000.github.com/moocow'
