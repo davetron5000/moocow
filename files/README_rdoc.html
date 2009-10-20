@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Wed Apr 22 22:37:56 -0400 2009</span>
+          <span class='datetime'>Mon Oct 19 20:16:35 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -51,13 +51,19 @@
             </td></tr>
             </table>
             <h2>Install</h2>
-            <pre>sudo gem install moocow</pre>
+            <p>
+            Note that the most up-to-date version of the gem is hosted at [<a
+            href="http://www.gemcutter.org">www.gemcutter.org</a>], so you&#8217;ll
+            need a one-time setup if you aren&#8217;t already using Gemcutter as your
+            primary source for gems.
+            </p>
+            <pre># Only if you aren't using gemcutter yet&#x000A;sudo gem install gemcutter&#x000A;sudo gem tumble&#x000A;&#x000A;# Once Gemcutter is setup&#x000A;sudo gem install moocow</pre>
             <h2>Overview</h2>
             <p>
             This is a very lightweight and easy-to-use client for [<a
             href="http://www.rememberthemilk.com">www.rememberthemilk.com</a>]
             </p>
-            <pre>require 'moocow'&#x000A;rtm = RTM.new(Endpoint.new(your_api_key,your_secret))&#x000A;rtm.token = user_token&#x000A;response = rtm.tasks.getList&#x000A;response.tasks.list.as_array.each do |list|&#x000A;  # this is an RTM list of taskseries&#x000A;end</pre>
+            <pre>require 'moocow'&#x000A;&#x000A;rtm = RTM::RTM.new(RTM::Endpoint.new(your_api_key,your_secret))&#x000A;rtm.token = user_token&#x000A;response = rtm.tasks.getList&#x000A;response.tasks.list.as_array.each do |list|&#x000A;  # this is an RTM list of taskseries&#x000A;end</pre>
             <h3>Authorization</h3>
             <p>
             Authorization is a bit tricky, but you only need to do it one time. This
