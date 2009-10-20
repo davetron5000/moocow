@@ -6,6 +6,14 @@ License:: Distributes under the Apache License, see LICENSE.txt in the source di
 
 == Install
 
+Note that the most up-to-date version of the gem is hosted at [http://www.gemcutter.org], so you'll need a one-time setup
+if you aren't already using Gemcutter as your primary source for gems.
+
+    # Only if you aren't using gemcutter yet
+    sudo gem install gemcutter
+    sudo gem tumble
+
+    # Once Gemcutter is setup
     sudo gem install moocow
 
 == Overview
