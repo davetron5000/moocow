@@ -1,5 +1,5 @@
 require 'rexml/formatters/pretty'
-require 'string_camelize'
+require 'string_rtmize'
 class MockHttp
   def initialize(response=nil)
     @response = response
@@ -49,3 +49,4 @@ class TestBase < Test::Unit::TestCase
     rtm
   end
 end
+

@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'string_camelize'
+require 'string_rtmize'
 require 'digest/md5'
 require 'cgi'
 require 'moocow/auth'
@@ -25,13 +25,13 @@ module RTM
   # Also note that you can use Ruby-style method calls instead of filthy camel-case, e.g.
   #
   #     response = rtm.tasks.get_list(:filter => 'location:Work and status:completed')
-  #     # Same as 
+  #     # Same as
   #     response = rtm.tasks.getList(:filter => 'location:Work and status:completed')
   #
   class RTM
 
     # Create access to RTM
-    # 
+    #
     # [endpoint] an Endpoint to RTM
     def initialize(endpoint)
       @endpoint = endpoint
@@ -77,7 +77,7 @@ module RTM
     # method names are converted to camelcase.
     def method_missing(symbol,*args)
       if !args || args.empty?
-        rtm_object = symbol.to_s.camelize
+        rtm_object = symbol.to_s.rtmize
         return RTMMethodSpace.new(rtm_object,@endpoint)
       else
         return super(symbol,*args)
@@ -87,7 +87,7 @@ module RTM
   end
 
   # Generic means of calling an RTM method.  This is returned by RTM.method_missing and, in most cases, is
-  # the end point that calls an RTM method.  
+  # the end point that calls an RTM method.
   class RTMMethodSpace
 
     # Create an RTMMethodSpace
@@ -125,7 +125,7 @@ module RTM
       if (@name == 'tasks' && symbol.to_s == 'notes')
         return RTMMethodSpace.new("tasks.notes",@endpoint)
       else
-        rtm_method = "rtm.#{@name}.#{symbol.to_s.camelize}"
+        rtm_method = "rtm.#{@name}.#{symbol.to_s.rtmize}"
         @endpoint.call_method(rtm_method,*args)
       end
     end
@@ -143,3 +143,4 @@ module RTM
   class NoTokenException < Exception
   end
 end
+

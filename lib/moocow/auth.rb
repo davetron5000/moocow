@@ -1,9 +1,9 @@
-require 'string_camelize'
+require 'string_rtmize'
 module RTM
 
   # Implements authorization related tasks.  These are to be used one-time only
   # when the user first uses your application.
-  # 
+  #
   #     auth = RTMAuth.new(api_key,secret)
   #     url = auth.get_auth_url
   #     # send user to url
@@ -17,7 +17,7 @@ module RTM
 
     # Get the URL to allow the user to authorize the application
     # [perms] the permissions you wish to get, either :read, :write, or :delete
-    # [application_type] if :desktop, a frob is gotten and the URL is suitable for a desktop application.  if :web, a url suitable for the web is returned. 
+    # [application_type] if :desktop, a frob is gotten and the URL is suitable for a desktop application.  if :web, a url suitable for the web is returned.
     # [callback_url] the callback URL you want the user sent to after they authorize.  This will have the frob and you must call frob= before get_token with the frob that was given to you.
     def url(perms = :delete, application_type=:desktop, callback_url=nil)
       @frob = get_frob if application_type == :desktop
@@ -56,3 +56,4 @@ module RTM
     end
   end
 end
+

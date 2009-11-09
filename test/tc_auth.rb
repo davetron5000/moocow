@@ -2,11 +2,11 @@ require 'moocow'
 require 'test/unit'
 require 'test/unit/ui/console/testrunner'
 require 'testbase'
-require 'string_camelize'
+require 'string_rtmize'
 include RTM
 
 class TC_testAuth < TestBase
-  
+
   def test_get_set_frob
     rtm = get_rtm
     auth = rtm.auth
@@ -29,8 +29,8 @@ class TC_testAuth < TestBase
   end
 
   def test_check_token_bad
-    rtm = get_rtm(true,{'rsp' => 
-                  { 'stat' => 'fail', 'err' => 
+    rtm = get_rtm(true,{'rsp' =>
+                  { 'stat' => 'fail', 'err' =>
                     { 'code' => '98', 'msg' => 'Invalid auth token' }
                   }
     });
@@ -85,3 +85,4 @@ class TC_testAuth < TestBase
   end
 
 end
+
