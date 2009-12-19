@@ -1,14 +1,15 @@
 spec = Gem::Specification.new do |s| 
   s.name = 'moocow'
-  s.version = '0.1.4'
+  s.version = '1.0.0'
   s.author = 'David Copeland'
   s.email = 'davidcopeland@naildrivin5.com'
   s.homepage = 'http://davetron5000.github.com/moocow'
   s.platform = Gem::Platform::RUBY
-  s.summary = 'Ruby Client for Remember The Milk'
+  s.summary = 'Ruby Client Library for Remember The Milk'
+  s.description = 'Basic ruby client library for accessing Remember The Milk via their API'
   s.files = %w(
 ext/hash_array.rb
-ext/string_camelize.rb
+ext/string_rtmize.rb
 lib/moocow/auth.rb
 lib/moocow/endpoint.rb
 lib/moocow/moocow.rb
