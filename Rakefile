@@ -1,11 +1,12 @@
 require 'rake/clean'
 require 'rake/testtask'
-require 'hanna/rdoctask'
+require 'rake/rdoctask'
 require 'rcov/rcovtask'
 require 'rubygems'
 require 'rake/gempackagetask'
 $: << '../grancher/lib'
 require 'grancher/task'
+require 'sdoc'
 
 Grancher::Task.new do |g|
   g.branch = 'gh-pages'
@@ -16,6 +17,8 @@ end
 Rake::RDocTask.new do |rd|
   rd.main = "README.rdoc"
   rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*","ext/**/*.rb")
+  rd.options << '--fmt' << 'shtml'
+  rd.template = 'direct'
   rd.title = 'Ruby Client for Remember The Milk'
 end
 
