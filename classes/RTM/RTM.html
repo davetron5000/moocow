@@ -1,256 +1,472 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang='en'>
-  <head>
-    <title>: RTM::RTM [Ruby Client for Remember The Milk]</title>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
-    <link href='../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
-    <script type='text/javascript'>
-      //<![CDATA[
-        function popupCode(url) {
-          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
-        }
-        
-        function toggleCode(id) {
-          var code = document.getElementById(id)
-        
-          code.style.display = code.style.display != 'block' ? 'block' : 'none'
-          return true
-        }
-        
-        // Make codeblocks hidden by default
-        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
-      //]]>
-    </script>
-  </head>
-  <body class='page'>
-    <div class='class' id='wrapper'>
-      <div class='header'>
-        <h1 class='name'>
-          <span class='type'>Class</span>
-          RTM::RTM
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>RTM::RTM</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+    <script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            RTM::RTM 
+            
+                <span class="parent">&lt; 
+                    
+                    Object
+                    
+                </span>
+            
         </h1>
-        <ol class='paths'>
-          <li>
-            <a href="../../files/lib/moocow/moocow_rb.html">lib/moocow/moocow.rb</a>
-          </li>
-        </ol>
-        <div class='parent'>
-          Parent:
-          <strong>Object</strong>
-        </div>
-      </div>
-      <div id='content'>
-        <div id='text'>
-          <div id='description'>
-            <p>
-            Root access to <a href="RTM.html">RTM</a> api. Most methods work just like
-            the api demonstrates, however auth is a bit different:
-            </p>
-            <pre>rtm = RTM.new(Endpoint.new(api_key,secret))&#x000A;auth_url = rtm.auth.url&#x000A;# Send user to url&#x000A;# When they click authorize and return to your app do:&#x000A;rtm.token=rtm.auth.get_token</pre>
-            <p>
-            This is a one time thing, so cache the token somewhere and you are good to
-            go:
-            </p>
-            <pre>response = rtm.tasks.getList(:filter =&gt; 'location:Work and status:completed')&#x000A;response = rtm.groups.add(:group =&gt; 'My New Group')</pre>
-            <p>
-            If you don&#8217;t supply timelines, they will be created for you each time
-            as needed. Also note that you can use Ruby-style method calls instead of
-            filthy camel-case, e.g.
-            </p>
-            <pre>response = rtm.tasks.get_list(:filter =&gt; 'location:Work and status:completed')&#x000A;# Same as&#x000A;response = rtm.tasks.getList(:filter =&gt; 'location:Work and status:completed')</pre>
-          </div>
-          <div id='method-list'>
-            <h2>Methods</h2>
-            <h3>public class</h3>
-            <ol>
-              <li><a href="#M000005">new</a></li>
-            </ol>
-            <h3>public instance</h3>
-            <ol>
-              <li><a href="#M000009">auth</a></li>
-              <li><a href="#M000007">auto_timeline=</a></li>
-              <li><a href="#M000011">checkToken</a></li>
-              <li><a href="#M000010">check_token</a></li>
-              <li><a href="#M000008">last_timeline</a></li>
-              <li><a href="#M000013">method_missing</a></li>
-              <li><a href="#M000012">test</a></li>
-              <li><a href="#M000006">token=</a></li>
-            </ol>
-          </div>
-          <div id='section'>
-            <div id='methods'>
-              <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000005'>
-                <a name='M000005'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>new</span>
-                  <span class='arguments'>(endpoint)</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Create access to <a href="RTM.html">RTM</a>
-                  </p>
-                  <dl>
-                  <dt>endpoint</dt><dd>an <a href="Endpoint.html">Endpoint</a> to <a href="RTM.html">RTM</a>
-                  
-                  </dd>
-                  </dl>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000005-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000005-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 36</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">endpoint</span>)&#x000A;      <span class="ruby-ivar">@endpoint</span> = <span class="ruby-identifier">endpoint</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000009'>
-                <a name='M000009'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>auth</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Get the auth method-space
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000009-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000009-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 55</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">auth</span>&#x000A;      <span class="ruby-constant">RTMAuth</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@endpoint</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-instance method' id='method-M000007'>
-                <a name='M000007'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>auto_timeline=</span>
-                  <span class='arguments'>(a)</span>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000007-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000007-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 45</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">auto_timeline=</span>(<span class="ruby-identifier">a</span>)&#x000A;      <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">auto_timeline</span>=<span class="ruby-identifier">a</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-instance method' id='method-M000011'>
-                <a name='M000011'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>checkToken</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Alias for <a href="RTM.html#M000010">check_token</a>
-                  </p>
-                </div>
-              </div>
-              <div class='public-instance method' id='method-M000010'>
-                <a name='M000010'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>check_token</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Raises an <a href="InvalidTokenException.html">InvalidTokenException</a> if
-                  the token is not valid
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000010-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000010-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 60</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_token</span>&#x000A;      <span class="ruby-keyword kw">begin</span>&#x000A;        <span class="ruby-identifier">response</span> = <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">call_method</span>(<span class="ruby-value str">'rtm.auth.checkToken'</span>)&#x000A;      <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">VerificationException</span>&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidTokenException</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-instance method' id='method-M000008'>
-                <a name='M000008'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>last_timeline</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Gets the last timeline that was used if in auto-timeline mode
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000008-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000008-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 50</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">last_timeline</span>&#x000A;      <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">last_timeline</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-instance method' id='method-M000013'>
-                <a name='M000013'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>method_missing</span>
-                  <span class='arguments'>(symbol,*args)</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Gateway to all other method-spaces. Assumes you are making a valid call on
-                  <a href="RTM.html">RTM</a>. Essentially, <b>any</b> method will give you an
-                  <a href="RTMMethodSpace.html">RTMMethodSpace</a> object keyed to the method
-                  name, e.g. rtm.foobar will assume that <a href="RTM.html">RTM</a> has a
-                  &#8220;foobar&#8221; methodspace. method names are converted to camelcase.
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000013-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000013-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 78</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>&#x000A;        <span class="ruby-identifier">rtm_object</span> = <span class="ruby-identifier">symbol</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">camelize</span>&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethodSpace</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rtm_object</span>,<span class="ruby-ivar">@endpoint</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-instance method' id='method-M000012'>
-                <a name='M000012'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>test</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Get the test method-space (Kernel defines a test method, making <a
-                  href="RTM.html#M000013">method_missing</a> problematic)
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000012-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000012-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 70</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test</span>&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethodSpace</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'test'</span>,<span class="ruby-ivar">@endpoint</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-instance method' id='method-M000006'>
-                <a name='M000006'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>token=</span>
-                  <span class='arguments'>(token)</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Set the token
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000006-source'><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 41</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">token=</span>(<span class="ruby-identifier">token</span>)&#x000A;      <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">token</span>=<span class="ruby-identifier">token</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id='footer-push'></div>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/moocow/moocow_rb.html">lib/moocow/moocow.rb</a></li>
+            
+        </ul>
     </div>
-    <div id='footer'>
-      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    <div id="bodyContent">
+        <div id="content">
+    
+    <div class="description">
+        <p>
+Root access to <a href="RTM.html">RTM</a> api. Most methods work just like
+the api demonstrates, however auth is a bit different:
+</p>
+<pre>
+    rtm = RTM.new(Endpoint.new(api_key,secret))
+    auth_url = rtm.auth.url
+    # Send user to url
+    # When they click authorize and return to your app do:
+    rtm.token=rtm.auth.get_token
+</pre>
+<p>
+This is a one time thing, so cache the token somewhere and you are good to
+go:
+</p>
+<pre>
+    response = rtm.tasks.getList(:filter =&gt; 'location:Work and status:completed')
+    response = rtm.groups.add(:group =&gt; 'My New Group')
+</pre>
+<p>
+If you don&#8217;t supply timelines, they will be created for you each time
+as needed. Also note that you can use Ruby-style method calls instead of
+filthy camel-case, e.g.
+</p>
+<pre>
+    response = rtm.tasks.get_list(:filter =&gt; 'location:Work and status:completed')
+    # Same as
+    response = rtm.tasks.getList(:filter =&gt; 'location:Work and status:completed')
+</pre>
+
+    </div>
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>A</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000021">auth</a>,</li>
+                
+                <li><a href="#M000019">auto_timeline=</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>C</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000024">checkToken</a>,</li>
+                
+                <li><a href="#M000022">check_token</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>L</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000020">last_timeline</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>M</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000026">method_missing</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>N</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000017">new</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>T</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000025">test</a>,</li>
+                
+                <li><a href="#M000018">token=</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000017">
+                    
+                    <a name="M000017"></a><b>new</b>(endpoint)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Create access to <a href="RTM.html">RTM</a>
+</p>
+<dl>
+<dt>endpoint</dt><dd>an <a href="Endpoint.html">Endpoint</a> to <a href="RTM.html">RTM</a>
+
+</dd>
+</dl>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000017_source')" id="l_M000017_source">show</a>
+                        
+                        | <a href="http://github.com/davetron5000/moocow/blob/511121ce58ed6eae40d39d33c4d9f976ea07fbac/lib/moocow/moocow.rb#L36" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000017_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 36</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">endpoint</span>)
+      <span class="ruby-ivar">@endpoint</span> = <span class="ruby-identifier">endpoint</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000021">
+                    
+                    <a name="M000021"></a><b>auth</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Get the auth method-space
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000021_source')" id="l_M000021_source">show</a>
+                        
+                        | <a href="http://github.com/davetron5000/moocow/blob/511121ce58ed6eae40d39d33c4d9f976ea07fbac/lib/moocow/moocow.rb#L55" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000021_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 55</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">auth</span>
+      <span class="ruby-constant">RTMAuth</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@endpoint</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000019">
+                    
+                    <a name="M000019"></a><b>auto_timeline=</b>(a)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000019_source')" id="l_M000019_source">show</a>
+                        
+                        | <a href="http://github.com/davetron5000/moocow/blob/511121ce58ed6eae40d39d33c4d9f976ea07fbac/lib/moocow/moocow.rb#L45" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000019_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 45</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">auto_timeline=</span>(<span class="ruby-identifier">a</span>)
+      <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">auto_timeline</span>=<span class="ruby-identifier">a</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000024">
+                    
+                    <a name="M000024"></a><b>checkToken</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Alias for <a href="RTM.html#M000022">check_token</a>
+</p>
+
+                </div>
+                
+                
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000022">
+                    
+                    <a name="M000022"></a><b>check_token</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Raises an <a href="InvalidTokenException.html">InvalidTokenException</a> if
+the token is not valid
+</p>
+
+                </div>
+                
+                
+                <div class="aka">
+                    This method is also aliased as
+                    
+                    <a href="RTM.html#M000024">checkToken</a>
+                    
+                </div>
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000022_source')" id="l_M000022_source">show</a>
+                        
+                        | <a href="http://github.com/davetron5000/moocow/blob/511121ce58ed6eae40d39d33c4d9f976ea07fbac/lib/moocow/moocow.rb#L60" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000022_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 60</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_token</span>
+      <span class="ruby-keyword kw">begin</span>
+        <span class="ruby-identifier">response</span> = <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">call_method</span>(<span class="ruby-value str">'rtm.auth.checkToken'</span>)
+      <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">VerificationException</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidTokenException</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000020">
+                    
+                    <a name="M000020"></a><b>last_timeline</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Gets the last timeline that was used if in auto-timeline mode
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000020_source')" id="l_M000020_source">show</a>
+                        
+                        | <a href="http://github.com/davetron5000/moocow/blob/511121ce58ed6eae40d39d33c4d9f976ea07fbac/lib/moocow/moocow.rb#L50" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000020_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 50</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">last_timeline</span>
+      <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">last_timeline</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000026">
+                    
+                    <a name="M000026"></a><b>method_missing</b>(symbol,*args)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Gateway to all other method-spaces. Assumes you are making a valid call on
+<a href="RTM.html">RTM</a>. Essentially, <b>any</b> method will give you an
+<a href="RTMMethodSpace.html">RTMMethodSpace</a> object keyed to the method
+name, e.g. rtm.foobar will assume that <a href="RTM.html">RTM</a> has a
+&#8220;foobar&#8221; methodspace. method names are converted to camelcase.
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000026_source')" id="l_M000026_source">show</a>
+                        
+                        | <a href="http://github.com/davetron5000/moocow/blob/511121ce58ed6eae40d39d33c4d9f976ea07fbac/lib/moocow/moocow.rb#L78" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000026_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 78</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-identifier">rtm_object</span> = <span class="ruby-identifier">symbol</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">rtmize</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethodSpace</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rtm_object</span>,<span class="ruby-ivar">@endpoint</span>)
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000025">
+                    
+                    <a name="M000025"></a><b>test</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Get the test method-space (Kernel defines a test method, making <a
+href="RTM.html#M000026">method_missing</a> problematic)
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000025_source')" id="l_M000025_source">show</a>
+                        
+                        | <a href="http://github.com/davetron5000/moocow/blob/511121ce58ed6eae40d39d33c4d9f976ea07fbac/lib/moocow/moocow.rb#L70" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000025_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 70</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RTMMethodSpace</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'test'</span>,<span class="ruby-ivar">@endpoint</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000018">
+                    
+                    <a name="M000018"></a><b>token=</b>(token)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Set the token
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000018_source')" id="l_M000018_source">show</a>
+                        
+                        | <a href="http://github.com/davetron5000/moocow/blob/511121ce58ed6eae40d39d33c4d9f976ea07fbac/lib/moocow/moocow.rb#L41" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000018_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/moocow/moocow.rb, line 41</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">token=</span>(<span class="ruby-identifier">token</span>)
+      <span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">token</span>=<span class="ruby-identifier">token</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
     </div>
   </body>
-</html>
+</html>    
