@@ -24,7 +24,7 @@ module RTM
       params = {'perms' => perms.to_s}
       params['frob'] = @frob if @frob
       params['callbackURL'] = callback_url if callback_url
-      @endpoint.url_for(nil,{'frob' => @frob, 'perms' => 'delete'},'auth')
+      @endpoint.url_for(nil,params,'auth')
     end
 
     # After the user has authorized, gets the token
