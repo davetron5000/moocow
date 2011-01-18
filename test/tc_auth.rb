@@ -5,6 +5,16 @@ require 'testbase'
 require 'string_rtmize'
 include RTM
 
+class MockEndpoint
+  attr_reader :method
+  attr_reader :params
+  attr_reader :endpoint
+  def url_for(method,params,endpoint)
+    @method = method
+    @params = params
+    @endpoint = endpoint
+  end
+end
 class TC_testAuth < TestBase
 
   def test_get_set_frob
@@ -14,6 +24,16 @@ class TC_testAuth < TestBase
     frob = 'this is a frob'
     auth.frob = frob
     assert_equal frob,auth.frob
+  end
+
+  def test_respect_perms
+    mock_endpoint = MockEndpoint.new
+    auth = RTMAuth.new(mock_endpoint)
+    auth = auth.url(:read,:web)
+    assert_nil mock_endpoint.method
+    assert_nil mock_endpoint.params['frob']
+    assert_equal 'auth',mock_endpoint.endpoint
+    assert_equal 'read',mock_endpoint.params['perms']
   end
 
   def test_bad_check_token_call
