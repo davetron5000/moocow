@@ -53,7 +53,7 @@ command :auth do |c|
   end
 end
 
-desc 'Gets your token; do this only once and put it in your api.yaml file'
+desc 'Gets your token; do this only once and put it in your .rtmapi file'
 arg_name "frob"
 command :token do |c|
   c.action do |global_options,options,args|
@@ -88,10 +88,11 @@ end
 pre do |global_options,command,options,args|
   if !command.nil? && command.name != :help
     return_val = true
-    if File.exists? 'api.yaml'
-    api_info = File.open('api.yaml') { |file| YAML::load(file) }
+    home_api = File.expand_path('~/.rtmapi.yaml')
+    if File.exists? home_api
+    api_info = File.open(home_api) { |file| YAML::load(file) }
     if !(api_info[:api_key] && api_info[:secret])
-      puts "api.yaml isn't complete"
+      puts "~/.rtmapi.yaml isn't complete"
       return_val = false;
     else
       ep = RTM::Endpoint.new(api_info[:api_key],api_info[:secret])
@@ -99,8 +100,8 @@ pre do |global_options,command,options,args|
       $rtm = RTM::RTM.new(ep)
     end
     else
-      puts "api.yaml not found; this is a YAML hash of your API key, secret key, and token"
-      File.open('api.yaml','w') { |file| YAML::dump({:api_key => 'your api key', :secret => 'your secret'},file); }
+      puts "~/.rtmapi.yaml not found; this is a YAML hash of your API key, secret key, and token"
+      File.open(home_api,'w') { |file| YAML::dump({:api_key => 'your api key', :secret => 'your secret'},file); }
       puts "it has been created for you with dummy values"
       return_val = false
     end
