@@ -119,3 +119,5 @@ Will print out a hashdump of what RTM returns for this method.
 * http://github.com/davetron5000/rtm - Source code
 * http://davetron5000.github.com/rtm - Rubydoc
 * http://www.rememberthemilk.com/services/api/methods/ - RTM API documentation
+
+:include:rtm.rdoc
