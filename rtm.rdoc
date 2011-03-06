@@ -1,0 +1,50 @@
+= <tt>rtm</tt>
+
+    rtm [global options] command_name [command-specific options] [--] arguments...
+
+* Use the command +help+ to get a summary of commands
+* Use the command <tt>help command_name</tt> to get a help for +command_name+
+* Use <tt>--</tt> to stop command line argument processing; useful if your arguments have dashes in them
+
+== Global Options
+These options are available for any command and are specified before the name of the command
+
+[<tt>--keys-file=arg</tt>] Location of your API keys file <i>( default: <tt>~/.rtmapi.yaml</tt>)</i>
+== Commands
+[<tt>any</tt>] executes any RTM method.  Do not include the "rtm." in the method name
+[<tt>auth</tt>] Prints out the auth URL to authorize your api key/ruby client and the frob that was used.  Do not do this after getting a token
+[<tt>chktoken</tt>] Checks that your token is valid
+[<tt>help</tt>] Shows list of commands or help for one command
+[<tt>ls</tt>] Lists incomplete tasks
+[<tt>token</tt>] Gets your token; do this only once and put it in your API keys file
+
+=== <tt>any method.call</tt>
+
+executes any RTM method.  Do not include the "rtm." in the method name
+
+=== <tt>auth </tt>
+
+Prints out the auth URL to authorize your api key/ruby client and the frob that was used.  Do not do this after getting a token
+
+=== <tt>chktoken </tt>
+
+Checks that your token is valid
+
+=== <tt>help [command]</tt>
+
+Shows list of commands or help for one command
+
+Gets help for the application or its commands.  Can also list the commands in a way helpful to creating a bash-style completion function
+
+==== Options
+These options are specified *after* the command.
+
+[<tt>-c, --completion</tt>] List all commands one line at a time, for use with shell completion ([command] argument is partial command to match)
+=== <tt>ls list_name</tt>
+
+Lists incomplete tasks
+
+=== <tt>token frob</tt>
+
+Gets your token; do this only once and put it in your API keys file
+
