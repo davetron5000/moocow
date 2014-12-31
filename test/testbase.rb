@@ -1,5 +1,7 @@
 require 'rexml/formatters/pretty'
 require 'string_rtmize'
+require 'minitest/autorun'
+
 class MockHttp
   def initialize(response=nil)
     @response = response
@@ -35,7 +37,7 @@ class REXML::Formatters::Pretty
   end
 end
 
-class TestBase < Test::Unit::TestCase
+class TestBase < MiniTest::Test
   def test_true
   end
 

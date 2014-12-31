@@ -1,18 +1,12 @@
 require 'rake/clean'
 require 'rake/testtask'
-require 'rake/rdoctask'
-require 'rcov/rcovtask'
+require 'rdoc/task'
 require 'rubygems'
-require 'rake/gempackagetask'
-$: << '../grancher/lib'
-require 'grancher/task'
+require 'bundler'
 require 'sdoc'
+require 'minitest/autorun'
 
-Grancher::Task.new do |g|
-  g.branch = 'gh-pages'
-  g.push_to = 'origin'
-  g.directory 'html'
-end
+Bundler::GemHelper.install_tasks
 
 Rake::RDocTask.new do |rd|
   rd.main = "README.rdoc"
@@ -22,30 +16,11 @@ Rake::RDocTask.new do |rd|
   rd.title = 'Ruby Client for Remember The Milk'
 end
 
-spec = eval(File.read('moocow.gemspec'))
- 
-Rake::GemPackageTask.new(spec) do |pkg|
-    pkg.need_tar = true
-end
-
 Rake::TestTask.new do |t|
   t.libs << "test"
   t.libs << 'ext'
   t.test_files = FileList['test/tc_*.rb']
 end
-
-desc 'Measures test coverage'
-task :coverage => :rcov do
-  system("open coverage/index.html") if PLATFORM['darwin']
-end
-
-Rcov::RcovTask.new do |t|
-  t.libs << 'test'
-  t.libs << 'ext'
-  t.test_files = FileList['test/tc_*.rb']
-end
-
-
 
 task :default => :test
 
