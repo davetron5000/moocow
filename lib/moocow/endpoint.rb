@@ -20,7 +20,7 @@ module RTM
       "rtm.timezones.getList" => true,
       "rtm.transactions.undo" => true,
     }
-    BASE_URL = 'http://www.rememberthemilk.com/services/'
+    BASE_URL = 'https://api.rememberthemilk.com/services/'
 
     # Create an endpoint to RTM, upon which methods may be called.
     # [api_key] your api key
